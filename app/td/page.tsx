@@ -10,7 +10,7 @@ import tdContent from '@/content/td-content.json'
 
 const tdData = [
   { id: 'TD1', title: 'TD1 — Audio (16 exercices)', color: 'audio', exercises: 16 },
-  { id: 'TD2', title: 'TD2 — Image & Vidéo (5 exercices)', color: 'image', exercises: 5 },
+  { id: 'TD2', title: 'TD2 — Image & Vidéo (7 exercices)', color: 'image', exercises: 7 },
   { id: 'TD3', title: 'TD3 — Streaming & Transport (4 exercices)', color: 'network', exercises: 4 },
   { id: 'TD4', title: 'TD4 — Vidéo & Streaming (6 exercices)', color: 'video', exercises: 6 },
   { id: 'TD5', title: 'TD5 — VoIP, RTP, SFU, DASH (8 exercices)', color: 'network', exercises: 8 },
