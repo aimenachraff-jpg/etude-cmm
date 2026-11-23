@@ -1,0 +1,310 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #0a0f1e;
+    --foreground: #e8eef7;
+  }
+
+  .light {
+    --background: #f8fafc;
+    --foreground: #0f172a;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-bg text-text font-sans antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-audio ring-offset-2 ring-offset-bg;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .card {
+    @apply bg-card border border-border rounded-2xl p-6 shadow-card transition-all duration-200 hover:shadow-card-hover;
+  }
+
+  .card-interactive {
+    @apply card cursor-pointer hover:border-audio/50;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-medium transition-all duration-150 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-bg disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply btn bg-audio text-bg hover:bg-audio-light active:bg-audio-dark;
+  }
+
+  .btn-secondary {
+    @apply btn bg-card-secondary text-text border border-border hover:bg-card hover:border-audio/50;
+  }
+
+  .btn-ghost {
+    @apply btn text-text hover:bg-card-secondary;
+  }
+
+  .btn-danger {
+    @apply btn bg-err/20 text-err hover:bg-err/30 active:bg-err;
+  }
+
+  .btn-domain-audio {
+    @apply btn bg-audio text-bg hover:bg-audio-light;
+  }
+
+  .btn-domain-image {
+    @apply btn bg-image text-white hover:bg-image-light;
+  }
+
+  .btn-domain-video {
+    @apply btn bg-video text-bg hover:bg-video-light;
+  }
+
+  .btn-domain-network {
+    @apply btn bg-network text-white hover:bg-network-light;
+  }
+
+  .input {
+    @apply w-full px-4 py-2.5 bg-bg border border-border rounded-xl text-text placeholder-text-muted focus:border-audio focus:ring-2 focus:ring-audio/20 focus:outline-none transition-all duration-150;
+  }
+
+  .label {
+    @apply block text-caption font-medium text-text-muted mb-1.5;
+  }
+
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-caption font-medium;
+  }
+
+  .badge-audio {
+    @apply badge bg-audio/20 text-audio;
+  }
+
+  .badge-image {
+    @apply badge bg-image/20 text-image;
+  }
+
+  .badge-video {
+    @apply badge bg-video/20 text-video;
+  }
+
+  .badge-network {
+    @apply badge bg-network/20 text-network;
+  }
+
+  .badge-calc {
+    @apply badge bg-warn/20 text-warn;
+  }
+
+  .badge-concept {
+    @apply badge bg-audio/20 text-audio;
+  }
+
+  .badge-design {
+    @apply badge bg-video/20 text-video;
+  }
+
+  .badge-qcm {
+    @apply badge bg-network/20 text-network;
+  }
+
+  .badge-lab {
+    @apply badge bg-image/20 text-image;
+  }
+
+  .progress-bar {
+    @apply h-2 bg-bg-secondary rounded-full overflow-hidden;
+  }
+
+  .progress-bar-fill {
+    @apply h-full bg-gradient-to-r from-audio to-network rounded-full transition-all duration-500 ease-out;
+  }
+
+  .katex-inline {
+    @apply inline-block align-middle;
+  }
+
+  .katex-display {
+    @apply overflow-x-auto my-4;
+  }
+
+  .mono {
+    @apply font-mono text-body-sm;
+  }
+
+  .stat-value {
+    @apply text-2xl font-bold font-mono tabular-nums;
+  }
+
+  .stat-label {
+    @apply text-caption text-text-muted;
+  }
+
+  .toast {
+    @apply fixed bottom-4 right-4 z-50 px-4 py-3 rounded-xl shadow-lg border animate-slide-up;
+  }
+
+  .toast-success {
+    @apply toast bg-ok/90 text-white border-ok;
+  }
+
+  .toast-error {
+    @apply toast bg-err/90 text-white border-err;
+  }
+
+  .toast-info {
+    @apply toast bg-audio/90 text-bg border-audio;
+  }
+
+  .tab {
+    @apply px-3 py-1.5 rounded-lg text-caption font-medium transition-all duration-150;
+  }
+
+  .tab-active {
+    @apply tab bg-gradient-to-r from-audio to-image text-bg;
+  }
+
+  .tab-inactive {
+    @apply tab bg-card-secondary text-text-muted hover:bg-card hover:text-text;
+  }
+
+  .accordion-trigger {
+    @apply w-full flex items-center justify-between p-4 text-left bg-card-secondary rounded-xl border border-border transition-all duration-150 hover:border-audio/50 focus-visible:ring-2 focus-visible:ring-audio focus-visible:ring-offset-2 focus-visible:ring-offset-bg;
+  }
+
+  .accordion-content {
+    @apply overflow-hidden transition-all duration-300 ease-in-out;
+  }
+
+  .table-container {
+    @apply overflow-x-auto rounded-xl border border-border;
+  }
+
+  .table {
+    @apply w-full border-collapse;
+  }
+
+  .table th {
+    @apply px-4 py-3 text-left text-caption font-semibold text-audio bg-card-secondary border-b border-border;
+  }
+
+  .table td {
+    @apply px-4 py-3 text-body-sm border-b border-border/50;
+  }
+
+  .table tr:last-child td {
+    @apply border-b-0;
+  }
+
+  .table tbody tr {
+    @apply hover:bg-card/50 transition-colors;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .glass {
+    @apply bg-bg/80 backdrop-blur-xl border border-border/50;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-audio via-image to-video bg-clip-text text-transparent;
+  }
+
+  .domain-border-audio {
+    @apply border-l-4 border-audio;
+  }
+
+  .domain-border-image {
+    @apply border-l-4 border-image;
+  }
+
+  .domain-border-video {
+    @apply border-l-4 border-video;
+  }
+
+  .domain-border-network {
+    @apply border-l-4 border-network;
+  }
+}
+
+/* KaTeX customizations */
+.katex {
+  font-size: 1em !important;
+}
+
+.katex-display > .katex {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  .card {
+    box-shadow: none !important;
+    border: 1px solid #e2e8f0 !important;
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .btn {
+    display: none !important;
+  }
+}

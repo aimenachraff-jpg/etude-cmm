@@ -1,0 +1,1468 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Communication Multimédia — Master 2 IAA — Plateforme de Révision</title>
+<style>
+:root{
+  --bg:#0a0f1e; --bg2:#111827; --card:#162033; --card2:#1e2a44; --paper:#f8fafc;
+  --text:#e8eef7; --muted:#94a3b8; --accent:#38bdf8; --accent2:#a78bfa; --accent3:#34d399; --warn:#fbbf24;
+  --ok:#22c55e; --err:#f87171; --border:#2a3a5e;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.65;min-height:100vh}
+a{color:var(--accent);text-decoration:none}
+.container{max-width:1280px;margin:0 auto;padding:20px}
+/* Hero */
+.hero{background:linear-gradient(135deg,#1e293b 0%,#0f172a 45%,#1e1b4b 100%);border-bottom:1px solid var(--border);padding:40px 20px 30px;margin-bottom:18px;position:relative;overflow:hidden;border-radius:0 0 24px 24px}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 85% 15%,#38bdf833,transparent 45%),radial-gradient(circle at 10% 80%,#a78bfa22,transparent 40%);pointer-events:none}
+.hero h1{font-size:2.4rem;color:#fff;position:relative;letter-spacing:-.5px}
+.hero p{color:var(--muted);margin-top:8px;position:relative;font-size:1.05rem}
+.hero .stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;position:relative}
+.hero .stat{background:#ffffff10;border:1px solid #ffffff18;border-radius:12px;padding:10px 16px;font-size:.9rem;backdrop-filter:blur(8px)}
+.hero .stat b{color:var(--accent);font-size:1.1rem}
+/* Nav */
+nav{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;position:sticky;top:0;background:#0a0f1ecc;backdrop-filter:blur(12px);padding:10px 0;z-index:20;border-bottom:1px solid var(--border)}
+nav button{background:var(--card);color:var(--text);border:1px solid var(--border);padding:7px 12px;border-radius:9px;cursor:pointer;font-size:.82rem;transition:.18s;font-weight:500}
+nav button:hover{background:var(--card2);transform:translateY(-1px);border-color:var(--accent)}
+nav button.active{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#0a0f1e;border-color:transparent;font-weight:600}
+/* Progress */
+.progress-wrap{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 16px;margin-bottom:18px;display:flex;align-items:center;gap:14px}
+.progress-bar{flex:1;height:10px;background:#0a0f1e;border-radius:5px;overflow:hidden}
+.progress-bar>div{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent3));width:0%;transition:width .5s;border-radius:5px}
+/* Sections */
+.section{display:none;animation:fadeIn .3s}
+.section.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:18px;box-shadow:0 6px 24px #00000040}
+.card h2{color:var(--accent);margin-bottom:12px;font-size:1.4rem;display:flex;align-items:center;gap:8px;border-bottom:1px solid var(--border);padding-bottom:8px}
+.card h3{color:var(--accent2);margin:16px 0 6px;font-size:1.15rem}
+.card h4{color:var(--warn);margin:12px 0 4px;font-size:1rem}
+p{margin-bottom:10px}
+ul,ol{margin-left:22px;margin-bottom:10px}
+li{margin-bottom:5px}
+code{background:#0a0f1e;padding:2px 7px;border-radius:5px;font-family:'Consolas',monospace;font-size:.88em;color:var(--warn)}
+pre{background:#0a0f1e;padding:14px;border-radius:10px;overflow-x:auto;margin:10px 0;font-size:.85rem;border:1px solid var(--border)}
+.formula{background:#0a0f1e;border-left:3px solid var(--accent);padding:12px 16px;margin:10px 0;border-radius:8px;font-family:'Consolas',monospace;color:var(--accent3)}
+.badge{display:inline-block;padding:3px 9px;border-radius:7px;font-size:.75rem;font-weight:600;margin-right:4px}
+.badge.audio{background:#0ea5e922;color:#38bdf8}
+.badge.video{background:#a78bfa22;color:#a78bfa}
+.badge.net{background:#22c55e22;color:#34d399}
+.badge.math{background:#f59e0b22;color:#fbbf24}
+.exercise{border-left:4px solid var(--accent2);padding:14px 16px;margin:16px 0;background:#ffffff06;border-radius:0 10px 10px 0}
+.sol{background:#0a0f1e;border:1px dashed var(--border);border-radius:10px;padding:14px;margin-top:10px;display:none}
+.sol.show{display:block}
+button.toggle{background:linear-gradient(135deg,var(--accent2),#7c3aed);color:#fff;border:none;padding:7px 14px;border-radius:8px;cursor:pointer;font-size:.85rem;margin-top:8px;font-weight:600;transition:.2s}
+button.toggle:hover{transform:translateY(-1px)}
+.calc{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:12px 0}
+.calc label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:3px}
+.calc input,.calc select{width:100%;padding:9px 10px;border-radius:8px;border:1px solid var(--border);background:#0a0f1e;color:var(--text);font-size:.95rem}
+.calc button{background:linear-gradient(135deg,var(--accent),#0284c7);color:#0a0f1e;border:none;padding:11px;border-radius:8px;cursor:pointer;font-weight:700;margin-top:8px;width:100%}
+.result{background:#0a0f1e;padding:14px;border-radius:10px;margin-top:10px;font-family:'Consolas',monospace;color:var(--accent3);border:1px solid var(--border);line-height:1.7}
+.quiz-q{margin:14px 0;padding:16px;background:#0a0f1e;border-radius:12px;border:1px solid var(--border)}
+.quiz-q .opt{display:block;padding:10px 12px;margin:5px 0;border-radius:8px;cursor:pointer;border:1px solid var(--border);transition:.15s}
+.quiz-q .opt:hover{background:var(--card2);border-color:var(--accent)}
+.quiz-q .opt.correct{background:#22c55e22;border-color:var(--ok)}
+.quiz-q .opt.wrong{background:#ef444422;border-color:var(--err)}
+.quiz-q .opt.selected{outline:2px solid var(--accent)}
+.flashcard{background:linear-gradient(135deg,#1e293b,#334155);border-radius:18px;padding:36px;min-height:180px;cursor:pointer;text-align:center;display:flex;align-items:center;justify-content:center;font-size:1.25rem;user-select:none;box-shadow:0 10px 40px #00000055;border:1px solid var(--border)}
+.flashcard .back{display:none;color:var(--accent3)}
+.flashcard.flipped .front{display:none}
+.flashcard.flipped .back{display:block}
+.fc-nav{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.fc-nav button{background:var(--card2);color:var(--text);border:1px solid var(--border);padding:9px 14px;border-radius:9px;cursor:pointer;font-weight:500;transition:.15s}
+.fc-nav button:hover{background:var(--card);border-color:var(--accent)}
+.mastery{display:flex;gap:8px;margin-top:10px}
+.mastery button{flex:1;padding:8px;border-radius:8px;border:none;cursor:pointer;font-weight:600;transition:.15s}
+.mastery .rev{background:#f59e0b22;color:var(--warn)}
+.mastery .ok{background:#22c55e22;color:var(--ok)}
+table{width:100%;border-collapse:collapse;margin:10px 0}
+th,td{border:1px solid var(--border);padding:8px 10px;font-size:.9rem}
+th{background:var(--card2);color:var(--accent)}
+.plan{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px}
+.plan .day{background:var(--card2);border-radius:12px;padding:16px;border:1px solid var(--border);transition:.2s}
+.plan .day:hover{transform:translateY(-2px);border-color:var(--accent)}
+.plan .day h4{color:var(--accent);margin-bottom:6px}
+.memento{background:#0a0f1e;border:1px solid var(--border);border-radius:12px;padding:14px;margin:8px 0;transition:.2s}
+.memento:hover{border-color:var(--accent)}
+.memento b{color:var(--accent)}
+kbd{background:#0a0f1e;border:1px solid var(--border);border-radius:5px;padding:2px 7px;font-family:monospace;font-size:.8rem}
+.pill{display:inline-block;padding:4px 12px;border-radius:999px;font-size:.78rem;margin:3px;background:var(--card2);color:var(--muted);border:1px solid var(--border)}
+.note{background:#fbbf2415;border-left:3px solid var(--warn);padding:10px 14px;border-radius:8px;margin:10px 0;font-size:.9rem}
+.mark{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;font-size:.72rem;font-weight:700;margin-right:8px;vertical-align:middle;border:2px solid}
+.mark.g{background:#22c55e22;color:#22c55e;border-color:#22c55e}
+.mark.r{background:#ef444422;color:#ef4444;border-color:#ef4444}
+.legend{display:flex;gap:16px;margin:10px 0 16px;flex-wrap:wrap;font-size:.85rem}
+.legend span{display:flex;align-items:center;gap:6px}
+.fiche{background:linear-gradient(135deg,#fef9c322,#fde68a11);border:1px solid #fbbf2444;border-radius:12px;padding:14px;margin:10px 0}
+.fiche b{color:var(--warn)}
+@media (max-width:760px){nav button{font-size:.78rem;padding:6px 8px}.hero h1{font-size:1.7rem}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="container">
+    <h1>🎓 Plateforme de Révision — Communication Multimédia</h1>
+    <p>Master 2 IAA · USTO-MB · Module: Communication Multimédia · Dr. BELHERAZEM.A · Fiches TD 1 à 6 + Cours (Chapitres 1 & 2)</p>
+    <div class="stats">
+      <div class="stat">📋 <b>6</b> Fiches TD</div>
+      <div class="stat">📖 <b>2</b> Chapitres</div>
+      <div class="stat">🧮 <b>8</b> Calculateurs</div>
+      <div class="stat">❓ <b>20</b> QCM</div>
+      <div class="stat">🃏 <b>20</b> Flashcards</div>
+      <div class="stat">🔖 <b>16</b> Mémentos</div>
+    </div>
+  </div>
+</header>
+<div class="container">
+<nav id="nav">
+  <button data-s="home" class="active">🏠 Accueil</button>
+  <button data-s="cours">📖 Cours</button>
+  <button data-s="formulas">📐 Formules</button>
+  <button data-s="memento">🔖 Mémento</button>
+  <button data-s="td1">TD1</button>
+  <button data-s="td2">TD2</button>
+  <button data-s="td3">TD3</button>
+  <button data-s="td4">TD4</button>
+  <button data-s="td5">TD5</button>
+  <button data-s="td6">TD6</button>
+  <button data-s="protocols">🌐 Protocoles</button>
+  <button data-s="calc">🧮 Calc</button>
+  <button data-s="huff">🌳 Huffman</button>
+  <button data-s="quiz">❓ Quiz</button>
+  <button data-s="flash">🃏 Flash</button>
+</nav>
+
+<div class="progress-wrap">
+  <span style="font-size:.85rem;color:var(--muted)">Progression</span>
+  <div class="progress-bar"><div id="prog"></div></div>
+  <span id="progTxt" style="font-size:.85rem;color:var(--accent)">0%</span>
+</div>
+
+<!-- HOME -->
+<section id="home" class="section active">
+<div class="card">
+  <h2>📅 Plan de révision sur 2 jours</h2>
+  <div class="plan">
+    <div class="day"><h4>Jour 1 — Fondamentaux & Audio</h4><ul><li>Cours: Audio (échantillonnage, quantification, psychoacoustique, codecs)</li><li>Formules + Mémento</li><li>TD1 (16 ex.)</li><li>Quiz audio</li></ul></div>
+    <div class="day"><h4>Jour 1 (suite) — Image & Vidéo</h4><ul><li>Cours: Image (JPEG, DCT), Vidéo (I/P/B, GOP, H.264)</li><li>TD2 (5 ex.)</li><li>Calculateurs</li><li>Flashcards</li></ul></div>
+    <div class="day"><h4>Jour 2 — Streaming & Transport</h4><ul><li>Cours: Transmission, encapsulation, modes diffusion, QoS</li><li>TD3, TD4, TD5, TD6</li><li>Quiz global</li></ul></div>
+    <div class="day"><h4>Conseils</h4><ul><li>Vérifier les unités (bits vs octets)</li><li>1 Mo = 1024² octets (binaire)</li><li>Nyquist: Fe ≥ 2·fmax</li><li>Stéréo = ×2 canaux</li><li>Buffer = gigue + 1 image</li></ul></div>
+  </div>
+</div>
+<div class="card">
+  <h2>📌 À retenir absolument</h2>
+  <div>
+    <span class="pill">Shannon: Fe ≥ 2·Fmax</span>
+    <span class="pill">Débit audio = Fe × B × canaux</span>
+    <span class="pill">SNR = 6.02·B + 1.25 dB</span>
+    <span class="pill">CD: 44.1 kHz, 16 bits, stéréo</span>
+    <span class="pill">Vidéo brut = L×H×bpp×fps</span>
+    <span class="pill">GOP: I (réf), P (prédit), B (bidir)</span>
+    <span class="pill">PTS = affichage, DTS = décodage</span>
+    <span class="pill">VOD: TCP ; Temps réel: UDP</span>
+    <span class="pill">Broadcast / Multicast / Unicast</span>
+    <span class="pill">DASH: adaptation de débit</span>
+    <span class="pill">Gigue = variation de délai</span>
+    <span class="pill">H.264 ≈ 100:1</span>
+    <span class="pill">Haptique: 1000 Hz, &lt;30 ms</span>
+    <span class="pill">JPEG: RGB→YCbCr→DCT→Quantif→Zigzag→Huffman</span>
+  </div>
+</div>
+<div class="card">
+  <h2>Vue d'ensemble</h2>
+  <ul>
+    <li><span class="badge audio">TD1</span> Audio: débit, taille, SNR, échantillonnage, codecs (16 ex.).</li>
+    <li><span class="badge video">TD2</span> Image/Vidéo: Huffman, débit vidéo, MPEG, GOP (5 ex.).</li>
+    <li><span class="badge net">TD3</span> Streaming: PTS/DTS, topologies, Netflix/Meet (4 ex.).</li>
+    <li><span class="badge video">TD4</span> Vidéo: Full HD, H.264, DASH, RTP, jitter (6 ex.).</li>
+    <li><span class="badge net">TD5</span> VoIP/RTP: latence, gigue, SFU, DASH (8 ex.).</li>
+    <li><span class="badge net">TD6</span> Télécom: PCM, E1, MCU/SFU, DVI (7 ex.).</li>
+  </ul>
+</div>
+</section>
+
+<!-- COURS -->
+<section id="cours" class="section">
+<div class="card">
+  <h2>📖 Cours — Chapitre 1 : Représentation des données multimédia</h2>
+  <div class="legend">
+    <span><span class="mark g">E</span> Étudié (présent dans les TDs)</span>
+    <span><span class="mark r">N</span> Non étudié (contenu supplémentaire)</span>
+  </div>
+
+  <h3><span class="mark g">E</span>1. Communication multimédia</h3>
+  <p>Intégration de texte, images, son, vidéo, animations, interactivité pour transmettre un message. Caractéristiques: multimodalité, interactivité, numérisation, intégration. Médias <b>discrets</b> (texte, image fixe) vs <b>continus</b> (audio, vidéo). Fichier (taille connue, accès aléatoire) vs Flux (temps réel, buffer, ABR).</p>
+
+  <h3><span class="mark g">E</span>2. Le son</h3>
+  <p>Onde de pression acoustique longitudinale. Paramètres: fréquence (Hz), amplitude (dB), timbre (harmoniques), enveloppe ADSR. Oreille: 20 Hz–20 kHz, dynamique ~120 dB.</p>
+  <h4><span class="mark r">N</span>Psychoacoustique</h4>
+  <ul>
+    <li>Courbes de Fletcher-Munson: sensibilité max 2-4 kHz (voix).</li>
+    <li>Masquage fréquentiel: un son fort masque un son faible proche en fréquence (base du MP3).</li>
+    <li>Masquage temporel: 5 ms avant et 100 ms après un son fort.</li>
+    <li>Localisation: ITD (graves &lt;1500 Hz), ILD (aigus &gt;3000 Hz), HRTF.</li>
+  </ul>
+  <h4><span class="mark g">E</span>Numérisation</h4>
+  <ul>
+    <li>Échantillonnage: Te=1/Fe, Fe≥2·fmax (Nyquist). Téléphonie 8 kHz, FM 22.05 kHz, CD 44.1 kHz, studio 48/96 kHz.</li>
+    <li>Quantification: 2^B niveaux, uniforme (CD) ou non-uniforme (loi A/μ, G.711).</li>
+    <li>SNR ≈ 6.02·B + 1.25 dB.</li>
+    <li>PCM: Débit = Fe × B × C. Taille = D × t / 8.</li>
+    <li>Évolutions: DPCM, ADPCM (G.721, 32 kbit/s), modulation delta.</li>
+  </ul>
+  <h4><span class="mark g">E</span>Compression audio</h4>
+  <ul>
+    <li>Sans perte: FLAC/ALAC ~50% (prédiction linéaire + Huffman).</li>
+    <li>Avec perte: MP3 (32 sous-bandes + psychoacoustique), AAC (+30% efficace, MDCT 1024 bandes), Opus (6-510 kbit/s, latence 5 ms, VoIP).</li>
+    <li>MIDI: partition, pas du son (0 kbit/s audio).</li>
+    <li>VBR: débit variable selon complexité (économie ~30%).</li>
+  </ul>
+  <div class="fiche"><b>MP3 en 8 étapes:</b> PCM → 32 sous-bandes → FFT → modèle psychoacoustique → masquage → seuil → quantification adaptative → Huffman.</div>
+
+  <h3><span class="mark g">E</span>3. L'image</h3>
+  <h4><span class="mark g">E</span>Types</h4>
+  <ul>
+    <li>Vectorielle: primitives géométriques (SVG). Zoom infini. Bézier cubique: B(t)=(1-t)³P₀+3(1-t)²tP₁+3(1-t)t²P₂+t³P₃.</li>
+    <li>Matricielle: grille de pixels. B/N 1 bit, gris 8 bits, RGB 24 bits (16.7 M couleurs), RGBA 32 bits.</li>
+  </ul>
+  <h4><span class="mark r">N</span>Modèles de couleur</h4>
+  <p>RGB (écrans, additif), CMJN (impression, soustractif), YUV/YCbCr (vidéo/JPEG), HSV.</p>
+  <h4><span class="mark r">N</span>YCbCr (BT.601)</h4>
+  <div class="formula">Y = 0.299R + 0.587G + 0.114B ; Cb = 128 - 0.1687R - 0.3313G + 0.5B ; Cr = 128 + 0.5R - 0.4187G - 0.0813B</div>
+  <h4><span class="mark g">E</span>Sous-échantillonnage 4:2:0</h4>
+  <p>Y pleine résolution, Cb/Cr ÷2 horiz. et vert. → −50% taille. Utilisé par JPEG, H.264, YouTube, Netflix.</p>
+  <h4><span class="mark g">E</span>Chaîne JPEG (5 étapes)</h4>
+  <ol>
+    <li>RGB → YCbCr.</li>
+    <li>Sous-échantillonnage 4:2:0.</li>
+    <li>DCT 8×8 sur Y (spatial → fréquentiel: 1 DC + 63 AC).</li>
+    <li>Quantification (diviser par table Q, hautes fréquences → 0).</li>
+    <li>Zigzag + RLE + Huffman (DC en différentiel, AC en (nb zéros, valeur), EOB).</li>
+  </ol>
+  <div class="note">PNG = sans perte (LZ77 + Huffman), garde tout.</div>
+
+  <h3><span class="mark g">E</span>4. La vidéo</h3>
+  <p>Suite d'images (frames) + son synchronisé. Résolution × fps × profondeur. Codecs: H.264 (standard), H.265/HEVC (2×), VP9/AV1 (YouTube/Netflix).</p>
+  <h4><span class="mark g">E</span>Compression intra (par image) et inter (entre images)</h4>
+  <ul>
+    <li><b>I-frame</b>: image complète (référence), 1 toutes les 1-2 s. Permet seek.</li>
+    <li><b>P-frame</b>: prédite depuis la précédente (vecteurs de mouvement + résidu).</li>
+    <li><b>B-frame</b>: bidirectionnelle (avant+après), la plus légère mais nécessite buffer (latence).</li>
+  </ul>
+  <h4><span class="mark r">N</span>Estimation de mouvement</h4>
+  <p>Macroblocs 16×16. Recherche du meilleur match dans fenêtre (±8 px). Vecteur (dx,dy). Critère SAD = Σ|I_courant − I_référence|. Résidu = bloc réel − bloc prédit → DCT+quantif+Huffman.</p>
+  <h4><span class="mark r">N</span>Décompression</h4>
+  <p>CABAC (décompression entropique) → IDCT/déquantif → compensation de mouvement inverse → YCbCr→RGB (upsampling) → filtre deblocking → sync PTS/DTS.</p>
+  <h4><span class="mark r">N</span>Qualité</h4>
+  <p>PSNR: &gt;40 dB excellent, 30-40 bon, &lt;30 dégradé. SSIM: 0-1 (1=identique).</p>
+
+  <h3><span class="mark r">N</span>5. Haptique</h3>
+  <p>Simulation du toucher (forces, vibrations, textures). Norme IEEE 1918.1.1-2024. Bidirectionnel. Boucle fermée à 1000 Hz (&lt;1 ms kinesthésique, &lt;30 ms tolérance).</p>
+  <ul>
+    <li><b>Kinesthésique:</b> forces, poids, résistance (moteurs, exosquelettes).</li>
+    <li><b>Tactile:</b> texture, température, vibrations (ERM/LRA).</li>
+  </ul>
+  <h4>Codecs haptiques</h4>
+  <p>Échantillonnage 1000 Hz → quantification 12-16 bits → modélisation (texture, raideur, frottement) → compression (deadband, JND 7-10%). Loi de Weber/Stevens. Stabilité: Re(Z)≥0 (passivité). Latence &lt;30 ms.</p>
+</div>
+
+<div class="card">
+  <h2>📖 Cours — Chapitre 2 : Transmission multimédia</h2>
+
+  <h3><span class="mark g">E</span>1. Problématique</h3>
+  <p>Vidéo 1080p brute = 1.49 Gbit/s ; 4G = 20 Mbit/s. Besoin multimédia ≫ ressources réseau. Transmission = compromis compression/transport/buffer/sync.</p>
+
+  <h3><span class="mark g">E</span>2. Principes de transmission</h3>
+  <h4><span class="mark g">E</span>Numérisation & compression</h4>
+  <p>Théorème Nyquist. Compression spatiale (intra/JPEG) et temporelle (inter/P,B). Codecs: H.264/H.265/AV1, AAC/Opus.</p>
+  <h4><span class="mark g">E</span>Encapsulation (couches)</h4>
+  <ol>
+    <li>ES: flux compressé (H.264, AAC) + SPS/PPS.</li>
+    <li>PES: ajout PTS/DTS (lip sync).</li>
+    <li>Conteneur: MP4 (ftyp/moov/mdat, stockage) ou MPEG-2 TS (188 octets, diffusion).</li>
+  </ol>
+  <h4><span class="mark g">E</span>Transport</h4>
+  <ul>
+    <li>TCP: fiable mais lent (HoL blocking) → VOD.</li>
+    <li>UDP: rapide, best-effort → temps réel.</li>
+    <li>RTP/RTCP sur UDP: n° séquence + timestamp ; RTCP = feedback QoS. WebRTC = RTP+SRTP+RTCP+ICE.</li>
+  </ul>
+  <h4><span class="mark g">E</span>Buffering & ABR</h4>
+  <p>Jitter buffer (50-200 ms) lisse le flux. ABR (HLS/DASH): serveur encode en N qualités, client mesure BP et bascule (ex: 4K→480p si BP chute).</p>
+  <h4><span class="mark g">E</span>Synchronisation</h4>
+  <ul>
+    <li>Intra-flux: cohérence temporelle d'un flux (25 fps).</li>
+    <li>Inter-flux: lip-sync audio/vidéo (tolérance ~80 ms), via timestamps RTP.</li>
+  </ul>
+  <h4><span class="mark g">E</span>Modes de diffusion</h4>
+  <ul>
+    <li><b>Broadcast</b>: un→tous (TNT, satellite). Scalabilité infinie, pas de pause.</li>
+    <li><b>Multicast</b>: un→groupe (IPTV, IGMP). Économe, réseau contrôlé.</li>
+    <li><b>Unicast</b>: un→un (Netflix, YouTube). Personnalisable, coûteux.</li>
+  </ul>
+  <p>Temporel: Live/linéaire (multicast, délai 3-30s), VoD (unicast, buffer 20-30s), temps réel interactif (WebRTC, &lt;150ms), LL-HLS (2-3s).</p>
+
+  <h3><span class="mark g">E</span>3. Contraintes</h3>
+  <h4><span class="mark g">E</span>Bande passante</h4>
+  <p>Shannon-Hartley: C = B·log₂(1+SNR). Goulot d'étranglement. Solutions: compression + ABR + traffic shaping.</p>
+  <h4><span class="mark g">E</span>QoS</h4>
+  <ul>
+    <li>Débit: SD 3-5, HD 5-10, 4K 25-50 Mbit/s; visio 1-3; VoIP ~64 kbit/s; gaming 3-5.</li>
+    <li>Latence: VoD 5-10s; temps réel &lt;150-200 ms.</li>
+    <li>Gigue: variation de délai; buffer de jitter.</li>
+    <li>Perte: VoIP &lt;1%, vidéo &lt;0.1%. FEC + masquage d'erreur.</li>
+    <li>MOS (1-5), PSNR (&gt;35 dB bon).</li>
+  </ul>
+  <h4><span class="mark g">E</span>Temps réel & deadline</h4>
+  <p>Paquets après deadline inutiles. UDP+RTP, petit buffer. SVC (scalabilité spatiale/temporelle/qualité).</p>
+  <div class="fiche"><b>Équation:</b> Qualité perçue = Compression efficace + Transport rapide (RTP) + Compensation réseau (Buffer+Adaptation) + Synchronisation parfaite.</div>
+</div>
+</section>
+
+<!-- PROTOCOLS -->
+<section id="protocols" class="section">
+<div class="card">
+  <h2><span class="mark r">N</span>🌐 Protocoles de streaming & multimédia (détail)</h2>
+  <div class="legend">
+    <span><span class="mark g">E</span> Étudié (dans les TDs)</span>
+    <span><span class="mark r">N</span> Non étudié (contenu supplémentaire)</span>
+  </div>
+
+  <h3><span class="mark r">N</span>1. Classification des protocoles</h3>
+  <table>
+    <tr><th>Famille</th><th>Protocoles</th><th>Usage</th></tr>
+    <tr><td>Temps réel</td><td>RTP, RTCP, RTSP, RTMP, SRT, WebRTC</td><td>Visio, live, faible latence</td></tr>
+    <tr><td>HTTP-based</td><td>HLS, DASH, MSS, HTTP/2, QUIC</td><td>VOD, ABR, CDN</td></tr>
+    <tr><td>Signalisation</td><td>SIP, H.323, SDP, MGCP</td><td>Établissement de session</td></tr>
+    <tr><td>Transport</td><td>TCP, UDP, QUIC</td><td>Fiabilité vs rapidité</td></tr>
+  </table>
+
+  <h3><span class="mark g">E</span>2. RTP / RTCP</h3>
+  <ul>
+    <li><b>RTP</b>: transport temps réel sur UDP. Champs: N° de séquence, timestamp, SSRC, payload type.</li>
+    <li><b>RTCP</b>: canal de contrôle (port+1). Rapports SR/RR: perte, gigue, délai aller-retour. Permet à l'émetteur d'adapter le débit.</li>
+    <li><b>RTCP SR</b>: Sender Report avec timestamps NTP pour la synchronisation (lip sync).</li>
+  </ul>
+
+  <h3><span class="mark r">N</span>3. RTSP (Real-Time Streaming Protocol)</h3>
+  <p>Protocole de contrôle (couche application) pour les sessions de streaming. Commandes: SETUP, PLAY, PAUSE, TEARDOWN, SEEK. Ne transporte pas les données (utilise RTP). Permet le VCR-like (pause, rewind, fast-forward).</p>
+
+  <h3><span class="mark r">N</span>4. SIP (Session Initiation Protocol)</h3>
+  <ul>
+    <li>Signalisation pour VoIP/vidéoconférence: INVITE, REGISTER, BYE, ACK, CANCEL.</li>
+    <li>Composants: UAC (client), UAS (serveur), Proxy, Redirect, Registrar, Location Service.</li>
+    <li>Utilise SDP pour décrire la session (codecs, ports, IP).</li>
+    <li>TRIP: routage inter-domaine pour les passerelles PSTN.</li>
+  </ul>
+
+  <h3><span class="mark r">N</span>5. HLS vs DASH</h3>
+  <table>
+    <tr><th></th><th>HLS (Apple)</th><th>DASH (MPEG)</th></tr>
+    <tr><td>Manifeste</td><td>.m3u8</td><td>.mpd</td></tr>
+    <tr><td>Segments</td><td>.ts (MPEG-TS) ou fMP4</td><td>fMP4 ou TS</td></tr>
+    <tr><td>Standard</td><td>Propriétaire Apple</td><td>Standard ISO/MPEG</td></tr>
+    <tr><td>ABR</td><td>Oui</td><td>Oui</td></tr>
+    <tr><td>Latence</td><td>~30s (LL-HLS ~2-3s)</td><td>~30s (LL-DASH ~2-3s)</td></tr>
+  </table>
+
+  <h3><span class="mark r">N</span>6. WebRTC</h3>
+  <p>Communication P2P dans le navigateur. Stack: RTP + SRTP (chiffré) + RTCP + ICE (traversée NAT) + DTLS + SDP. Utilise SRTP pour le média et SCTP pour le data channel. Latence &lt;150 ms. Utilisé par Meet, Zoom, Teams (partiellement).</p>
+
+  <h3><span class="mark r">N</span>7. SRT (Secure Reliable Transport)</h3>
+  <p>Protocole récent pour le streaming à faible latence sur réseaux non fiables. Chiffrement AES, correction d'erreurs (ARQ), adaptation de bande passante. Idéal pour le contribution (contribution → CDN).</p>
+
+  <h3><span class="mark r">N</span>8. RTMP / RTMPS</h3>
+  <p>Protocole Adobe pour le streaming (Flash). Faible latence, encore utilisé pour l'ingestion (OBS → serveur). RTMPS = version chiffrée (TLS).</p>
+
+  <h3><span class="mark r">N</span>9. HTTP/2 & QUIC pour DASH</h3>
+  <ul>
+    <li>HTTP/2: multiplexage, server push, réduction de la latence vs HTTP/1.1.</li>
+    <li>QUIC: sur UDP, résout le HoL blocking, handshake rapide (0-RTT), chiffrement intégré. Base de HTTP/3.</li>
+    <li>DASH ne mandate pas le transport: peut utiliser TCP, HTTP/2, QUIC, ou même UDP (broadcast).</li>
+  </ul>
+
+  <h3><span class="mark g">E</span>10. Types d'applications multimédia</h3>
+  <table>
+    <tr><th>Type</th><th>Caractéristiques</th><th>Exemples</th></tr>
+    <tr><td>Stocké (VoD)</td><td>Délai tolérant, buffer 20-30s, TCP</td><td>Netflix, YouTube</td></tr>
+    <tr><td>Live (streaming)</td><td>Délai 2-30s, buffer 2-10s, TCP/UDP</td><td>Twitch, TV live</td></tr>
+    <tr><td>Temps réel interactif</td><td>&lt;150 ms, pas de retransmission, UDP</td><td>Zoom, VoIP, gaming</td></tr>
+  </table>
+
+  <h3><span class="mark r">N</span>11. QoS et métriques</h3>
+  <ul>
+    <li><b>MOS</b>: Mean Opinion Score (1-5) donné par des humains.</li>
+    <li><b>PSNR</b>: Peak Signal-to-Noise Ratio en dB (&gt;35 bon).</li>
+    <li><b>SSIM</b>: Structural Similarity (0-1).</li>
+    <li><b>IntServ</b>: réservation de ressources (RSVP).</li>
+    <li><b>DiffServ</b>: priorisation des paquets (classes de service).</li>
+  </ul>
+</div>
+</section>
+
+<!-- FORMULAS -->
+<section id="formulas" class="section">
+<div class="card">
+  <h2>📐 Formules — toutes les règles du cours</h2>
+
+  <h3>Audio — Numérisation</h3>
+  <table>
+    <tr><th>Grandeur</th><th>Formule</th></tr>
+    <tr><td>Période d'échantillonnage</td><td>Te = 1 / Fe</td></tr>
+    <tr><td>Fréquence (Hz)</td><td>f = 1 / T</td></tr>
+    <tr><td>Nyquist (fréquence min)</td><td>Fe_min = 2 × fmax</td></tr>
+    <tr><td>Niveaux de quantification</td><td>2^B</td></tr>
+    <tr><td>Pas de quantification</td><td>Q = (Vmax − Vmin) / 2^B</td></tr>
+    <tr><td>SNR (Signal-to-Noise Ratio)</td><td>SNR ≈ 6.02 × B + 1.25 (dB)</td></tr>
+    <tr><td>Débit binaire audio</td><td>D = Fe × B × C (bit/s) [C = canaux]</td></tr>
+    <tr><td>Taille fichier audio</td><td>S = D × t / 8 (octets)</td></tr>
+    <tr><td>Durée d'une trame audio</td><td>t = échantillons / Fe (ms)</td></tr>
+    <tr><td>Débit CD audio</td><td>44 100 × 16 × 2 = 1 411 200 bit/s = 1.41 Mbit/s</td></tr>
+  </table>
+
+  <h3>Image — Représentation & compression</h3>
+  <table>
+    <tr><th>Grandeur</th><th>Formule</th></tr>
+    <tr><td>Image B/N (1 bit)</td><td>Taille = L × H / 8 (octets)</td></tr>
+    <tr><td>Niveaux de gris (8 bits)</td><td>Taille = L × H (octets)</td></tr>
+    <tr><td>RGB (24 bits)</td><td>Taille = L × H × 3 (octets)</td></tr>
+    <tr><td>RGBA (32 bits)</td><td>Taille = L × H × 4 (octets)</td></tr>
+    <tr><td>YCbCr (BT.601)</td><td>Y = 0.299R + 0.587G + 0.114B</td></tr>
+    <tr><td></td><td>Cb = 128 − 0.1687R − 0.3313G + 0.5B</td></tr>
+    <tr><td></td><td>Cr = 128 + 0.5R − 0.4187G − 0.0813B</td></tr>
+    <tr><td>Inverse YCbCr→RGB</td><td>R = Y + 1.402(Cr−128)</td></tr>
+    <tr><td></td><td>G = Y − 0.344136(Cb−128) − 0.714136(Cr−128)</td></tr>
+    <tr><td></td><td>B = Y + 1.772(Cb−128)</td></tr>
+    <tr><td>Droite (vectoriel)</td><td>P = P0 + t(P1 − P0), t ∈ [0,1]</td></tr>
+    <tr><td>Bézier cubique</td><td>B(t) = (1−t)³P0 + 3(1−t)²tP1 + 3(1−t)t²P2 + t³P3</td></tr>
+    <tr><td>DCT 8×8</td><td>Transformation spatial → fréquentiel (1 DC + 63 AC)</td></tr>
+    <tr><td>SAD (estimation mouvement)</td><td>SAD = Σ |I_courant(i,j) − I_référence(i,j)|</td></tr>
+    <tr><td>Résidu</td><td>Résidu = Bloc réel − Bloc prédit</td></tr>
+  </table>
+
+  <h3>Vidéo</h3>
+  <table>
+    <tr><th>Grandeur</th><th>Formule</th></tr>
+    <tr><td>Débit vidéo brut</td><td>D = L × H × bpp × fps (bit/s)</td></tr>
+    <tr><td>Taille vidéo brute</td><td>Taille = Résolution × fps × Profondeur × Durée</td></tr>
+    <tr><td>Durée d'une image vidéo</td><td>t = 1 / fps (s)</td></tr>
+    <tr><td>PSNR (qualité)</td><td>PSNR = 10·log₁₀(MAX² / MSE) (dB)</td></tr>
+    <tr><td>SSIM</td><td>0 à 1 (1 = identique)</td></tr>
+    <tr><td>Compression H.264</td><td>≈ 100:1</td></tr>
+  </table>
+
+  <h3>Transmission & Réseau</h3>
+  <table>
+    <tr><th>Grandeur</th><th>Formule</th></tr>
+    <tr><td>Capacité de canal (Shannon-Hartley)</td><td>C = B × log₂(1 + SNR)</td></tr>
+    <tr><td>Latence bout-en-bout</td><td>L = capture + encodage + réseau + jitter + décodage</td></tr>
+    <tr><td>Gigue</td><td>Variation du délai de transmission</td></tr>
+    <tr><td>Buffer de gigue</td><td>≈ gigue + durée d'une image</td></tr>
+  </table>
+
+  <h3>Haptique</h3>
+  <table>
+    <tr><th>Grandeur</th><th>Formule</th></tr>
+    <tr><td>Loi de Hooke</td><td>F = k × x</td></tr>
+    <tr><td>Impédance</td><td>F = K·x + B·v (K=raideur, B=amortissement)</td></tr>
+    <tr><td>PSNR haptique</td><td>10·log₁₀(P_signal / P_erreur) (dB)</td></tr>
+    <tr><td>Loi de Weber (JND)</td><td>Différence perceptible si &gt; 7-10% de la force</td></tr>
+    <tr><td>Loi de Stevens</td><td>Perception ≈ Intensité^α</td></tr>
+    <tr><td>Fréquence haptique</td><td>1000 Hz (boucle fermée)</td></tr>
+    <tr><td>Latence haptique</td><td>&lt; 30 ms (tolérance), &lt;1 ms (kinesthésique)</td></tr>
+  </table>
+
+  <h3>QoS — Débits recommandés</h3>
+  <table>
+    <tr><th>Usage</th><th>Débit</th></tr>
+    <tr><td>Streaming SD</td><td>3-5 Mbit/s</td></tr>
+    <tr><td>Streaming HD (1080p)</td><td>5-10 Mbit/s</td></tr>
+    <tr><td>Streaming 4K UHD</td><td>25-50 Mbit/s</td></tr>
+    <tr><td>Visioconférence HD</td><td>1-3 Mbit/s</td></tr>
+    <tr><td>VoIP (G.711)</td><td>~64 kbit/s</td></tr>
+    <tr><td>Gaming en ligne</td><td>3-5 Mbit/s</td></tr>
+    <tr><td>Latence temps réel</td><td>&lt; 150-200 ms</td></tr>
+    <tr><td>Perte tolérée (VoIP)</td><td>&lt; 1%</td></tr>
+    <tr><td>Perte tolérée (vidéo)</td><td>&lt; 0.1%</td></tr>
+  </table>
+</div>
+</section>
+
+<!-- MEMENTO -->
+<section id="memento" class="section">
+<div class="card">
+  <h2>🔖 Mémento</h2>
+  <div class="memento"><b>Multimédia:</b> intégration texte/image/son/vidéo/interactivité synchronisée.</div>
+  <div class="memento"><b>Média discret:</b> indépendant du temps. <b>Continu:</b> dépendant du temps.</div>
+  <div class="memento"><b>Fichier:</b> taille connue, accès aléatoire. <b>Flux:</b> temps réel, buffer, ABR.</div>
+  <div class="memento"><b>Échantillonnage:</b> découpage temporel. <b>Quantification:</b> amplitude sur B bits.</div>
+  <div class="memento"><b>Alias:</b> repliement si Fe&lt;2·fmax.</div>
+  <div class="memento"><b>Psychoacoustique:</b> masquage freq/temp, Fletcher-Munson.</div>
+  <div class="memento"><b>Huffman:</b> code variable, fréquents→courts.</div>
+  <div class="memento"><b>DCT:</b> spatial→fréquentiel (JPEG).</div>
+  <div class="memento"><b>GOP:</b> groupe entre deux I (I/P/B).</div>
+  <div class="memento"><b>PTS/DTS:</b> présentation/décodage.</div>
+  <div class="memento"><b>Broadcast/Multicast/Unicast:</b> un-tous/groupe/un.</div>
+  <div class="memento"><b>Gigue:</b> variation de délai.</div>
+  <div class="memento"><b>ABR/DASH:</b> adaptation de débit.</div>
+  <div class="memento"><b>QoS:</b> débit, latence, gigue, perte.</div>
+  <div class="memento"><b>MCU/SFU:</b> mixage/relais.</div>
+  <div class="memento"><b>Haptique:</b> 1000 Hz, &lt;30 ms, passivité.</div>
+</div>
+</section>
+
+<!-- TD1 -->
+<section id="td1" class="section">
+<div class="card">
+  <h2>TD1 — Audio (16 exercices)</h2>
+  <div class="note">Toutes les données sont en qualité CD sauf mention contraire: Fe=44.1 kHz, 16 bits, stéréo.</div>
+
+  <div class="exercise">
+    <h3>Exercice 1 — Débit, taille, SNR, codecs</h3>
+    <p>On enregistre 1 minute de son en qualité CD (stéréo): Fe = 44.1 kHz, résolution N = 16 bits.</p>
+    <ol>
+      <li>Calculez le débit binaire en kbit/s.</li>
+      <li>Calculez la taille du fichier .wav en Mo.</li>
+      <li>Calculez le SNR théorique avec SNR ≈ 6.02×B + 1.25 dB. Que vaut-il pour 8 bits, 16 bits, 24 bits?</li>
+      <li>On passe ce fichier en FLAC (~50% de réduction) puis en MP3 128 kbit/s (~91% de réduction). Calculez les nouvelles tailles.</li>
+    </ol>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <ol>
+        <li>Débit = Fe × N × canaux = 44 100 × 16 × 2 = 1 411 200 bit/s = <b>1411.2 kbit/s</b>.</li>
+        <li>Taille = 1 411 200 × 60 / 8 = 10 584 000 octets = <b>10.58 Mo</b>.</li>
+        <li>8 bits: 6.02×8+1.25 = <b>49.41 dB</b>. 16 bits: <b>97.57 dB</b>. 24 bits: <b>145.73 dB</b>.</li>
+        <li>FLAC: 10.58 × 0.5 = <b>5.29 Mo</b>. MP3 128k: 10.58 × 0.09 = <b>0.95 Mo</b> (ou 128 000×60/8 = 960 000 octets).</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 2 — Fréquence d'échantillonnage pour la voix</h3>
+    <p>En téléphonie traditionnelle, la voix humaine transmise utilise des fréquences comprises entre 100 Hz et 3 400 Hz. Quelle fréquence d'échantillonnage minimale Fe doit-on choisir?</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>Par le théorème de Nyquist: Fe_min = 2 × fmax = 2 × 3 400 = <b>6 800 Hz</b>. En pratique on utilise <b>8 000 Hz</b> (norme téléphonique G.711).</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 3 — Numérisation d'un signal v(t)</h3>
+    <p>Numérisez v(t), sachant que fe = 20 Hz et B = 5 bits. On reportera Te, Q, les valeurs binaires, et on indiquera l'erreur de quantification e.</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>Te = 1/fe = 1/20 = <b>0.05 s</b>. Niveaux de quantification = 2^5 = <b>32</b>. Pour chaque échantillon: lire l'amplitude sur la courbe → trouver le niveau le plus proche → écrire le code binaire sur 5 bits → erreur e = valeur réelle − valeur quantifiée (0 ≤ e &lt; Q). Exercice graphique: appliquer pour chaque instant t = k·Te.</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 4 — Taille d'un fichier audio</h3>
+    <p>On dispose d'un fichier/flux audio stéréo, d'une durée de 4 min 15 s, d'une résolution de 16 bits et d'une fréquence d'échantillonnage de 100 Hz. Quelle est la taille du fichier/flux audio?</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>t = 4×60 + 15 = 255 s. Taille = Fe × B × canaux × t / 8 = 100 × 16 × 2 × 255 / 8 = <b>102 000 octets ≈ 0.10 Mo</b>.</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 5 — Fréquence d'échantillonnage inconnue</h3>
+    <p>On dispose d'un fichier/flux audio stéréo, d'une durée de 3 min 30 s et d'une résolution de 16 bits. La taille du fichier est de 290 Mo. Quelle est la fréquence d'échantillonnage de ce fichier/flux audio?</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>t = 3×60 + 30 = 210 s. Fe = (Taille × 8) / (B × canaux × t) = (290×10⁶ × 8) / (16 × 2 × 210) = 2 320 000 000 / 6 720 ≈ <b>345 238 Hz ≈ 345 kHz</b>.</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 6 — Fréquence d'échantillonnage (mono)</h3>
+    <p>On dispose d'un fichier/flux audio mono, d'une durée de 10 min et d'une résolution de 8 bits. Taille du fichier = 325 Mo. Quel est la fréquence d'échantillonnage de ce fichier?</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>t = 10 × 60 = 600 s. Fe = (325×10⁶ × 8) / (8 × 1 × 600) = 2 600 000 000 / 4 800 ≈ <b>541 667 Hz ≈ 542 kHz</b>.</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 7 — Durée d'un fichier audio</h3>
+    <p>On dispose d'un fichier/flux audio stéréo, numérisé avec 44.1 KHz et une résolution de 16 bits. La taille du fichier est de 300 Mo. Quelle est sa durée?</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>t = (Taille × 8) / (Fe × B × canaux) = (300×10⁶ × 8) / (44 100 × 16 × 2) = 2 400 000 000 / 1 411 200 ≈ <b>1 700.6 s ≈ 28 min 21 s</b>.</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 8 — Durée d'un fichier audio (96 kHz)</h3>
+    <p>On dispose d'un fichier audio stéréo, numérisé avec une fréquence d'échantillonnage de 96.0 kHz et une résolution de 16 bits. La taille du fichier est de 200 Mo. Quelle est la durée de ce fichier audio?</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>t = (200×10⁶ × 8) / (96 000 × 16 × 2) = 1 600 000 000 / 3 072 000 ≈ <b>520.8 s ≈ 8 min 41 s</b>.</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 9 — Taille d'un fichier audio long</h3>
+    <p>Quel sera la taille d'un fichier audio en stéréo, d'une durée d'une heure et 20 min, encodé à 44 100 Hz (qualité CD audio) en 16 bits? À quoi cette quantité trouvée correspond-t-elle?</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>t = 80 × 60 = 4 800 s. Taille = 44 100 × 16 × 2 × 4 800 / 8 = <b>846 720 000 octets ≈ 846.7 Mo</b> ≈ 1.2 CD audio (700 Mo).</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 10 — Résolution à partir du débit</h3>
+    <p>Débit binaire 256 Kbps, fréquence = 44 100 Hz, mono, taille du fichier 600 Mo. Quelle est la résolution utilisée (nombre de bits)?</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>En PCM non compressé: N = Débit / (Fe × canaux) = 256 000 / 44 100 ≈ 5.8 bits (non entier). <b>Incohérent pour du PCM.</b> Le fichier est donc compressé (ex: MP3); la résolution PCM ne se déduit pas du débit compressé.</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 11 — Possibilités de débit 512 Kbps en CBR</h3>
+    <p>Donnez trois possibilités pour BitRate Audio = 512 Kbps en CBR (débit constant).</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>Il faut Fe × B × canaux = 512 000. Exemples: (32 000 Hz, 16 bits, mono); (16 000 Hz, 16 bits, stéréo); (32 000 Hz, 8 bits, stéréo); (8 000 Hz, 16 bits, 4 canaux).</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 12 — VBR vs CBR</h3>
+    <p>Une communication audio de 5 minutes en VBR: BitRate Appel = 128 Kbps, BitRate Silence = 16 Kbps. Le silence durant l'appel était d'environ 90 secondes. Quelle est la consommation de la bande passante durant cet appel? Quelle aurait été la consommation avec CBR à 128 Kbps?</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>Parole = 300 − 90 = 210 s. VBR: 128×210 + 16×90 = 26 880 + 1 440 = 28 320 kbit ≈ <b>3.46 Mo</b>. CBR 128: 128×300 = 38 400 kbit ≈ <b>4.69 Mo</b>. Économie ≈ 26%.</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 13 — Manipulation Audacity</h3>
+    <p>Ouvrir un logiciel de conversion audio (Audacity). Convertir une séquence WAV en 256 Kbps, puis en 8 Kbps, puis reconvertir le fichier 8 Kbps en 256 Kbps. Que pensez-vous de la qualité? Pourquoi?</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>La compression avec perte (8 Kbps) supprime définitivement des informations. Reconvertir en 256 Kbps ne restaure pas ce qui est perdu: la qualité reste dégradée. C'est l'irréversibilité de la compression avec perte.</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 14 — Comparaison 8 bits vs 32 bits</h3>
+    <p>Comparer le format 8 bits et 32 bits en utilisant un fichier WAV. Écouter les deux. Que se passe-t-il? Quelles sont les tailles? Pourquoi?</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>Le 32 bits offre un SNR bien meilleur (moins de bruit de quantification) et une dynamique plus large, mais sa taille est 4× celle du 8 bits. Le 8 bits peut présenter un bruit de quantification audible.</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 15 — Comparaison de codecs</h3>
+    <p>Convertir une séquence audio en WAV (512 Kbps), MP3 (96 Kbps) et GSM (13 Kbps). Tableau des conclusions sur la qualité et la taille. Que conclure sur les performances de chacun?</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>WAV: qualité maximale, taille la plus grande. MP3 96 Kbps: bon compromis taille/qualité. GSM 13 Kbps: très petite taille, qualité téléphonique. Plus le débit est bas, plus la compression est forte et la qualité baisse.</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 16 — Taille d'un CD audio de 15 min</h3>
+    <p>Quelle est la taille d'un fichier audio en codage Audio CD de 15 min?</p>
+    <p>A. 120.69 Mo &nbsp; B. 151.4 Mo &nbsp; C. 210.54 Mo &nbsp; D. 285.90 Mo</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>S = 44 100 × 16 × 2 × 900 / 8 = 158 760 000 octets = 158 760 000 / 1024² = <b>151.4 Mo → Réponse B</b>.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- TD2 -->
+<section id="td2" class="section">
+<div class="card">
+  <h2>TD2 — Image & Vidéo (5 exercices)</h2>
+
+  <div class="exercise">
+    <h3>Exercice 1 — Codage de Huffman</h3>
+    <p>Pour une image avec des intensités: 21, 95, 169 et 243; et des probabilités respectives 3/8, 1/8, 1/8 et 3/8. Générer un arbre de Huffman binaire et proposer le codage correspondant.</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>On combine d'abord les deux symboles les moins probables (95 et 169, proba 1/8) → nœud de proba 1/4. Puis on combine ce nœud avec le symbole de proba 3/8 (21) → 5/8. Enfin on combine avec le dernier symbole (243, proba 3/8). Un codage possible (les codes peuvent varier selon l'ordre):</p>
+      <ul>
+        <li>243 (3/8) → <b>0</b></li>
+        <li>21 (3/8) → <b>10</b></li>
+        <li>95 (1/8) → <b>110</b></li>
+        <li>169 (1/8) → <b>111</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 2 — Huffman sur une image</h3>
+    <p>Soit l'image suivante (niveaux de gris). À partir de l'image: 1) calculez les fréquences des niveaux; 2) créez un arbre de codage de Huffman; 3) attribuez des codes à chaque niveau; 4) remplacez les niveaux par les codes.</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>Compter les occurrences de chaque niveau (63, 127, 255) dans la matrice. Le niveau le plus fréquent reçoit le code le plus court. Construire l'arbre en combinant les deux niveaux les moins fréquents. Utiliser le calculateur Huffman de l'outil pour vérifier avec vos fréquences.</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 3 — Débit d'un flux vidéo non compressé</h3>
+    <p>On souhaite transmettre un flux vidéo non compressé composé d'une définition de 1920 × 1080 pixels (Full HD), avec une profondeur de couleur de 24 bits par pixel, à une cadence de 30 images par seconde (fps). Quel est le débit binaire de ce flux vidéo en Mbit/s?</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>D = 1920 × 1080 × 24 × 30 = 1 492 992 000 bit/s = <b>1492.99 Mbit/s ≈ 1.49 Gbit/s</b>.</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 4 — Format TV HD</h3>
+    <p>Le format 1280 × 720 points en 25 images/seconde est un format standard pour la télévision haute définition. La luminance est codée en 8 bits, et un seul signal de chrominance est numérisé sur 4 bits. Quel est le débit avant compression?</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>12 bits/pixel (8 luminance + 4 chrominance) → D = 1280 × 720 × 12 × 25 = <b>276.48 Mbit/s</b>.</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 5 — Compression MPEG-1</h3>
+    <p>Nous proposons une séquence vidéo de 2 min (25 i/s) dont la taille du fichier est 60 Mo. On utilise MPEG-1 pour compresser cette vidéo, avec B = 20% d'une image avant compression, P = 50% et I = 100%, en utilisant le codage IBBPBBIBBP.</p>
+    <ul>
+      <li>Quelle est la taille du GOP utilisé?</li>
+      <li>Calculez la taille du fichier généré (compressé).</li>
+    </ul>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>GOP = <b>10 images</b> (IBBPBBIBBP). Dans un GOP: I = 2, P = 2, B = 6. Poids = 2×100% + 2×50% + 6×20% = 2 + 1 + 1.2 = 4.2 (en unités de taille d'image). Moyenne = 4.2/10 = 0.42. Taille compressée = 60 × 0.42 = <b>25.2 Mo</b>.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- TD3 -->
+<section id="td3" class="section">
+<div class="card">
+  <h2>TD3 — Streaming & Transport (4 exercices)</h2>
+
+  <div class="exercise">
+    <h3>Exercice 1 — Couche PTS/DTS et protocoles</h3>
+    <p>À quelle couche ajoute-t-on le PTS/DTS? Citez le protocole de transport pour la VOD et pour le temps réel interactif.</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>Les timestamps PTS/DTS sont ajoutés à la couche <b>PES (Packetized Elementary Stream)</b>, au-dessus de l'ES. Pour la VOD: <b>TCP</b> (HTTP/HLS/DASH). Pour le temps réel interactif: <b>UDP</b> (RTP/SRTP).</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 2 — Ordre de décodage et d'affichage</h3>
+    <p>Vous recevez dans l'ordre d'arrivée: PES1 (DTS=0ms, PTS=80ms, Type=I), PES2 (DTS=40ms, PTS=40ms, Type=P), PES3 (DTS=80ms, PTS=0ms, Type=B).</p>
+    <ol>
+      <li>Quel est l'ordre de décodage?</li>
+      <li>Quel est l'ordre d'affichage?</li>
+      <li>Si l'audio a PTS = 0, 40, 80 ms, quel paquet vidéo s'affiche avec quel paquet audio?</li>
+      <li>C'est quoi le lip sync? Pourquoi le DTS de la frame B est après son PTS?</li>
+    </ol>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <ol>
+        <li>Décodage par DTS croissant: <b>I (0) → P (40) → B (80)</b>.</li>
+        <li>Affichage par PTS croissant: <b>B (0) → P (40) → I (80)</b>.</li>
+        <li>Audio PTS=0 avec vidéo B(PTS=0); audio 40 avec P; audio 80 avec I.</li>
+        <li>Lip sync = synchronisation audio/vidéo (tolérance ~40-80 ms). Le DTS de B est après son PTS car B dépend des références I et P: il doit être décodé après elles mais affiché avant.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 3 — Choix de topologie</h3>
+    <p>On veut diffuser un cours en live: cas 1) 5000 étudiants dans un amphi avec TNT interne; cas 2) 300 étudiants en fibre à travers l'Algérie avec box IPTV; cas 3) 50 000 étudiants sur internet mobile 4G. Pour chaque cas, quel mode topologique choisir (Broadcast/Multicast/Unicast)? Justifiez.</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <ul>
+        <li>Cas 1 (amphi TNT): <b>Broadcast</b> — diffusion massive, pas de retour.</li>
+        <li>Cas 2 (fibre IPTV): <b>Multicast</b> — un flux par groupe, économie de bande.</li>
+        <li>Cas 3 (4G mobile): <b>Unicast</b> — ABR/CDN, personnalisable.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 4 — Conception Netflix vs Meet</h3>
+    <p>Vous devez concevoir: a) une plateforme type Netflix; b) une appli visio type Meet. Pour chaque: protocole de transport (TCP/UDP et pourquoi?), taille de buffer (20s ou 150ms?), encapsulation (fMP4/HLS ou RTP?), gestion de la perte. Calculez la latence de bout en bout pour b) si capture 20ms + encodage 30ms + réseau 40ms + jitter buffer 60ms + décodage 20ms.</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <table>
+        <tr><th></th><th>Netflix (VOD)</th><th>Meet (visio)</th></tr>
+        <tr><td>Protocole</td><td>TCP</td><td>UDP</td></tr>
+        <tr><td>Buffer</td><td>20 s</td><td>150 ms</td></tr>
+        <tr><td>Encapsulation</td><td>fMP4/HLS/DASH</td><td>RTP/SRTP</td></tr>
+        <tr><td>Perte</td><td>Retransmission</td><td>FEC/PLC</td></tr>
+      </table>
+      <p>Latence Meet = 20 + 30 + 40 + 60 + 20 = <b>170 ms</b>.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- TD4 -->
+<section id="td4" class="section">
+<div class="card">
+  <h2>TD4 — Vidéo & Streaming (6 exercices)</h2>
+
+  <div class="exercise">
+    <h3>Exercice 1 — Débit vidéo Full HD</h3>
+    <p>Une vidéo Full HD 1080p (1920 × 1080), 30 images/sec, couleur 24 bits.</p>
+    <ol>
+      <li>Calculez le débit brut en Mbit/s.</li>
+      <li>Si on la compresse en H.264 avec un taux de compression de 100:1, quel est le nouveau débit?</li>
+      <li>Peut-on la streamer sur une ADSL de 8 Mbit/s?</li>
+    </ol>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <ol>
+        <li>D = 1920 × 1080 × 24 × 30 = 1 492 992 000 bit/s = <b>1492.99 Mbit/s</b>.</li>
+        <li>1492.99 / 100 = <b>14.93 Mbit/s</b>.</li>
+        <li>Non en brut (1.49 Gbit/s). Même compressé (14.93 &gt; 8): <b>marginal, il faut réduire la qualité/débit</b>.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 2 — Buffer et freeze</h3>
+    <p>On streame une vidéo à D_v = 5 Mbit/s sur un réseau qui a un débit moyen D_r = 4 Mbit/s mais qui varie. Le player a un buffer initial de 10 secondes.</p>
+    <ol>
+      <li>Au bout de combien de temps le buffer se vide et la vidéo freeze?</li>
+      <li>Que propose DASH (Dynamic Adaptive Streaming) pour résoudre ça?</li>
+    </ol>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <ol>
+        <li>Buffer = 10 s × 5 = 50 Mbit. Déficit = 5 − 4 = 1 Mbit/s. Temps = 50 / 1 = <b>50 s</b>.</li>
+        <li>DASH: adaptation dynamique du débit (baisse la qualité quand la bande passante baisse).</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 3 — Timestamps RTP</h3>
+    <p>Une vidéo est encodée avec audio à 48 kHz et vidéo à 25 fps. Le décodeur reçoit un paquet audio avec timestamp RTP = 48000 et un paquet vidéo avec timestamp = 90000 (horloge vidéo 90 kHz).</p>
+    <ol>
+      <li>Quelle est la durée d'une trame audio (1024 échantillons) et d'une image vidéo en ms?</li>
+      <li>Si l'audio arrive avec 80 ms de retard sur la vidéo, que va percevoir l'utilisateur? Quelle est la limite d'acceptabilité?</li>
+    </ol>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <ol>
+        <li>Audio: 1024 / 48 000 = <b>21.33 ms</b>. Vidéo: 1 / 25 = <b>40 ms</b>.</li>
+        <li>Désynchronisation perceptible (audio en retard). Limite d'acceptabilité ≈ <b>40-80 ms</b> (lip sync).</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 4 — Taille du buffer</h3>
+    <p>En streaming, les paquets RTP arrivent avec une gigue de 100 ms. Vidéo à 25 fps. Quelle est la taille de buffer au lecteur?</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>Buffer ≈ gigue + durée d'une image = 100 + 40 = <b>~140 ms</b> (minimum 100 ms).</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 5 — Encapsulation</h3>
+    <p>Pourquoi on ne peut pas envoyer directement le flux ES H.264 sur le réseau? Pourquoi passer par PES puis MP4 ou TS?</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>L'ES brut n'a pas de timing, de synchronisation audio/vidéo, ni de résilience aux erreurs. Le PES ajoute les PTS/DTS; le TS/MP4 permet le multiplexage, l'accès aléatoire et la correction d'erreurs.</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 6 — Taille d'un film</h3>
+    <p>Calculer la taille d'un film de 1 h en 1080p 24 fps:</p>
+    <p>a) Brut &nbsp;&nbsp; b) MP4 YouTube 4.5 Mbps vidéo + AAC 128 kbit/s.</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>a) Brut: 1920 × 1080 × 3 octets × 24 × 3600 = <b>≈ 537.5 Go</b>.<br>
+      b) (4.5 + 0.128) Mbit/s × 3600 s = 16 660.8 Mbit ≈ <b>2.03 Go</b>.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- TD5 -->
+<section id="td5" class="section">
+<div class="card">
+  <h2>TD5 — VoIP, RTP, SFU, DASH (8 exercices)</h2>
+
+  <div class="exercise">
+    <h3>Exercice 1 — Latence VoIP bout-en-bout</h3>
+    <p>Configuration VoIP: encodage G.711 20 ms, paquétisation 20 ms, traversée réseau IP 80 ms, jitter buffer côté récepteur 40 ms, décodage 20 ms.</p>
+    <ol>
+      <li>Calculez la latence totale bout-en-bout.</li>
+      <li>La norme ITU-T G.114 recommande &lt;150 ms (optimal) et &lt;400 ms (acceptable). Comment qualifiez-vous cet appel?</li>
+      <li>Le réseau se dégrade à 120 ms. Proposez 3 actions concrètes pour rester &lt;200 ms.</li>
+    </ol>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <ol>
+        <li>Total = 20 + 20 + 80 + 40 + 20 = <b>180 ms</b>.</li>
+        <li><b>Acceptable</b> (mais pas optimal, car &gt;150 ms).</li>
+        <li>Réseau 120 ms → total 220 ms. Actions: activer la QoS (priorité VoIP), réduire le jitter buffer à 20 ms, utiliser Opus (paquets 10 ms), choisir un serveur plus proche.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 2 — Gigue RTP</h3>
+    <p>Un récepteur RTP mesure les délais d'arrivée de 6 paquets: 20, 35, 22, 60, 25, 80 ms.</p>
+    <ol>
+      <li>Calculez la gigue (variation).</li>
+      <li>Si le jitter buffer est fixé à 50 ms, combien de paquets sont considérés perdus?</li>
+      <li>Pourquoi un buffer adaptatif est-il meilleur?</li>
+    </ol>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <ol>
+        <li>Gigue = max − min = 80 − 20 = <b>60 ms</b> (variation). Écart moyen ≈ 19.8 ms.</li>
+        <li>Paquets dont le délai dépasse 50 ms: 60 et 80 → <b>2 paquets perdus</b>.</li>
+        <li>Le buffer adaptatif s'ajuste aux conditions réseau: moins de latence inutile et moins de pertes.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 3 — Conférence SFU</h3>
+    <p>Une conférence de 12 participants en SFU: chacun envoie 1 flux 2.5 Mbit/s (1080p H.264) + 64 kbit/s audio (Opus).</p>
+    <ol>
+      <li>Bande montante par client?</li>
+      <li>Bande descendante par client (reçoit 11 flux)?</li>
+      <li>Charge totale sur le serveur SFU? Comparez avec un MCU qui transcoderait tout en 1 flux.</li>
+    </ol>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <ol>
+        <li>Montant = 2.5 + 0.064 = <b>2.564 Mbit/s</b>.</li>
+        <li>Descendant = 11 × 2.564 = <b>28.204 Mbit/s</b>.</li>
+        <li>SFU: le serveur relaie (12×2.564 up + 12×28.204 down). MCU: transcode en 1 flux/client → moins de bande passante client mais CPU serveur élevé.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 4 — Adaptation DASH sur réseau variable</h3>
+    <p>Réseau 4G variable: 5 Mbit/s → 1 Mbit/s → 300 kbit/s → 4 Mbit/s en 10 secondes. On diffuse en HLS/DASH avec 3 rendus: 1080p @3 Mbit/s, 720p @1.5 Mbit/s, 360p @400 kbit/s.</p>
+    <ol>
+      <li>Que doit faire le player à chaque changement?</li>
+      <li>Que se passe-t-il si on reste en 1080p à 0.3 Mbit/s?</li>
+    </ol>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <ol>
+        <li>Descendre la qualité quand la bande passante baisse (0.3 Mbit/s → 360p), remonter quand elle est stable (4 Mbit/s → 1080p).</li>
+        <li>Buffering, freezes, rebuffering.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 5 — Perte d'une image I dans MPEG</h3>
+    <p>GOP = IBBPBBPBBPBB (12 images), I = 150 Ko, P = 60 Ko, B = 20 Ko.</p>
+    <ol>
+      <li>Que passe-t-il si: on perd un B? on perd un P? on perd un I (conséquence sur tout le GOP)?</li>
+      <li>Pourquoi on envoie I régulièrement en streaming live?</li>
+    </ol>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <ol>
+        <li>Perte B: gêne mineure sur une seule image. Perte P: corruption jusqu'au prochain I. Perte I: tout le GOP corrompu.</li>
+        <li>Pour la récupération, l'accès aléatoire, le changement de chaîne et la résilience aux erreurs.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 6 — Désynchronisation audio/vidéo</h3>
+    <p>Le système a un encodage vidéo H.264 = 120 ms, un encodage audio Opus = 20 ms, réseau identique.</p>
+    <ol>
+      <li>Calculez le décalage initial.</li>
+      <li>Comment RTCP Sender Report (SR) avec timestamps NTP permet de resynchroniser côté récepteur?</li>
+    </ol>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <ol>
+        <li>Décalage = 120 − 20 = <b>100 ms</b> (vidéo en retard).</li>
+        <li>RTCP SR transporte des timestamps NTP qui permettent d'aligner les horloges RTP côté récepteur.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 7 — Visioconférence multi-sites</h3>
+    <p>3 sites en visioconférence avec des latences différentes: Site A 40 ms, Site B 100 ms, Site C 180 ms. Comment assurer que tous voient la même image au même moment?</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>Bufferiser jusqu'à la latence maximale (180 ms) pour que tous soient synchronisés, ou utiliser un MCU avec une horloge commune.</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 8 — Cahier des charges télémédecine</h3>
+    <p>Vous devez concevoir un système de télémédecine pour un hôpital: visioconférence médecin-patient en 1080p, partage d'images JPEG/DICOM, enregistrement. Contraintes: latence &lt;150 ms, perte &lt;0.5%, bande hôpital 100 Mbit/s symétrique, sécurité HIPAA, 20 consultations simultanées. Proposez: les codecs, les protocoles, la QoS, le chiffrement, le dimensionnement bande, l'architecture.</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>Codecs: H.264/HEVC + Opus + JPEG. Protocoles: WebRTC/SRTP (visio), HTTPS (DICOM). QoS: priorité médicale. Chiffrement: TLS/SRTP. Bande: 20 × (2.5 + 0.064) = 51.3 Mbit/s &lt; 100. Architecture: SFU/MCU avec liens redondants.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- TD6 -->
+<section id="td6" class="section">
+<div class="card">
+  <h2>TD6 — Télécom & DVI (7 exercices)</h2>
+
+  <div class="exercise">
+    <h3>Exercice 1 — PCM G.711</h3>
+    <p>Un abonné analogique est numérisé en PCM G.711 à 64 kbit/s. Pourquoi 64 kbit/s? Expliquez l'échantillonnage et la quantification.</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>La voix humaine a une fréquence maximale de 4 kHz. Par Nyquist: Fe = 8 kHz. Quantification sur 8 bits. Débit = 8000 × 8 = <b>64 kbit/s</b>. C'est le standard téléphonique (G.711).</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 2 — Dimensionnement E1</h3>
+    <p>Un central local a 2000 abonnés. Taux de simultanéité 10%. Un E1 = 30 canaux voix (2.048 Mbit/s).</p>
+    <ol>
+      <li>Combien d'E1 vers le central de transit?</li>
+      <li>Combien de centraux de transit si un transit gère 20 E1?</li>
+    </ol>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <ol>
+        <li>Appels simultanés = 2000 × 0.10 = 200. E1 nécessaires = ceil(200/30) = <b>7 E1</b> (210 canaux).</li>
+        <li>ceil(7/20) = <b>1 central de transit</b>.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 3 — Comparaison de codecs voix</h3>
+    <p>On a 50 appels simultanés: G.711 = 87.2 kbit/s avec overhead, Opus 32 kbit/s = 40 kbit/s avec overhead.</p>
+    <ol>
+      <li>Calculez la bande totale pour chaque codec.</li>
+      <li>Quel codec choisir en interne vs en externe?</li>
+    </ol>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <ol>
+        <li>G.711: 50 × 87.2 = 4 360 kbit/s = <b>4.36 Mbit/s</b>. Opus: 50 × 40 = <b>2 000 kbit/s = 2 Mbit/s</b>.</li>
+        <li>En interne: G.711 (qualité maximale). En externe: Opus (économie de bande passante).</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 4 — MCU vs SFU</h3>
+    <p>On a 6 participants à une audioconférence.</p>
+    <ol>
+      <li>Calculez la charge CPU et la bande passante pour MCU et SFU.</li>
+      <li>Quand choisir MCU?</li>
+    </ol>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <ol>
+        <li>SFU: chaque client monte 1 flux et descend 5; le serveur relaie (6 up + 30 down). MCU: le serveur mixe, chaque client monte 1 et descend 1 (6 up + 6 down) mais CPU élevé.</li>
+        <li>Choisir MCU quand les clients ont une bande passante limitée ou des codecs hétérogènes.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 5 — DVI</h3>
+    <p>1. Quelle est la différence entre DVI-D, DVI-A et DVI-I? 2. Single Link vs Dual Link. 3. Quelle est la résolution max en Single Link?</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>DVI-D: numérique seul. DVI-A: analogique seul. DVI-I: les deux (numérique + analogique). Single Link: 1920 × 1200 @60 Hz. Dual Link: 2560 × 1600 @60 Hz.</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 6 — Adaptateur DVI-D vers VGA</h3>
+    <p>Soit un PC avec sortie DVI-D relié à un écran VGA avec un adaptateur simple. Est-ce possible? Pourquoi? Faut-il DVI-I ou un convertisseur actif?</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>Non, ce n'est pas possible: le DVI-D ne transporte pas de signal analogique. Il faut soit une sortie DVI-I (qui inclut l'analogique), soit un convertisseur actif.</p>
+    </div>
+  </div>
+
+  <div class="exercise">
+    <h3>Exercice 7 — Interlacé vs progressif</h3>
+    <p>Soit les deux images 1080i60 et 1080p30. Quel est l'avantage de l'interlacé en 2000? Pourquoi est-on passé tout progressif aujourd'hui?</p>
+    <button class="toggle" onclick="toggleSol(this)">Voir la solution détaillée</button>
+    <div class="sol">
+      <p>L'interlacé économisait la bande passante pour une même fluidité perçue (50/60 champs/s). Aujourd'hui le progressif domine: meilleure qualité, pas d'artefacts de peigne, écrans progressifs, compression favorise le progressif.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- CALC -->
+<section id="calc" class="section">
+<div class="card">
+  <h2>🧮 Calculateurs interactifs</h2>
+  <p style="color:var(--muted);font-size:.85rem">Les résultats se mettent à jour automatiquement.</p>
+
+  <h3>1. Audio — Débit & taille</h3>
+  <div class="calc">
+    <div><label>Fe (Hz)</label><input id="aFe" type="number" value="44100" oninput="calcAudio()"></div>
+    <div><label>Bits (B)</label><input id="aB" type="number" value="16" oninput="calcAudio()"></div>
+    <div><label>Canaux</label><input id="aCh" type="number" value="2" oninput="calcAudio()"></div>
+    <div><label>Durée (s)</label><input id="aT" type="number" value="60" oninput="calcAudio()"></div>
+  </div>
+  <div class="result" id="rAudio"></div>
+
+  <h3>2. Audio — SNR & Nyquist</h3>
+  <div class="calc">
+    <div><label>Bits (B)</label><input id="sB" type="number" value="16" oninput="calcSNR()"></div>
+    <div><label>fmax (Hz)</label><input id="nyF" type="number" value="20000" oninput="calcNyq()"></div>
+  </div>
+  <div class="result" id="rSNR"></div>
+  <div class="result" id="rNyq"></div>
+
+  <h3>3. Audio — Quantification</h3>
+  <div class="calc">
+    <div><label>Bits (B)</label><input id="qB" type="number" value="8" oninput="calcQuant()"></div>
+    <div><label>Vmax</label><input id="qMax" type="number" value="1" oninput="calcQuant()"></div>
+    <div><label>Vmin</label><input id="qMin" type="number" value="-1" oninput="calcQuant()"></div>
+  </div>
+  <div class="result" id="rQuant"></div>
+
+  <h3>4. Vidéo — Débit brut</h3>
+  <div class="calc">
+    <div><label>Largeur</label><input id="vW" type="number" value="1920" oninput="calcVideo()"></div>
+    <div><label>Hauteur</label><input id="vH" type="number" value="1080" oninput="calcVideo()"></div>
+    <div><label>Bits/pixel</label><input id="vBpp" type="number" value="24" oninput="calcVideo()"></div>
+    <div><label>fps</label><input id="vFps" type="number" value="30" oninput="calcVideo()"></div>
+  </div>
+  <div class="result" id="rVideo"></div>
+
+  <h3>5. Image — Taille brute</h3>
+  <div class="calc">
+    <div><label>Largeur</label><input id="iW" type="number" value="1920" oninput="calcImg()"></div>
+    <div><label>Hauteur</label><input id="iH" type="number" value="1080" oninput="calcImg()"></div>
+    <div><label>Mode</label><select id="iMode" onchange="calcImg()"><option value="1">B/N (1 bit)</option><option value="8">Gris (8 bits)</option><option value="24" selected>RGB (24 bits)</option><option value="32">RGBA (32 bits)</option></select></div>
+    <div><label>Compression JPEG (%)</label><input id="iComp" type="number" value="10" oninput="calcImg()"></div>
+  </div>
+  <div class="result" id="rImg"></div>
+
+  <h3>6. MPEG — Taille compressée (GOP)</h3>
+  <div class="calc">
+    <div><label>Taille originale (Mo)</label><input id="mS" type="number" value="60" oninput="calcMPEG()"></div>
+    <div><label>Poids I (%)</label><input id="mI" type="number" value="100" oninput="calcMPEG()"></div>
+    <div><label>Poids P (%)</label><input id="mP" type="number" value="50" oninput="calcMPEG()"></div>
+    <div><label>Poids B (%)</label><input id="mB" type="number" value="20" oninput="calcMPEG()"></div>
+    <div><label>Nb I</label><input id="nI" type="number" value="2" oninput="calcMPEG()"></div>
+    <div><label>Nb P</label><input id="nP" type="number" value="2" oninput="calcMPEG()"></div>
+    <div><label>Nb B</label><input id="nB" type="number" value="6" oninput="calcMPEG()"></div>
+  </div>
+  <div class="result" id="rMPEG"></div>
+
+  <h3>7. Latence bout-en-bout</h3>
+  <div class="calc">
+    <div><label>Capture (ms)</label><input id="l1" type="number" value="20" oninput="calcLat()"></div>
+    <div><label>Encodage (ms)</label><input id="l2" type="number" value="30" oninput="calcLat()"></div>
+    <div><label>Réseau (ms)</label><input id="l3" type="number" value="40" oninput="calcLat()"></div>
+    <div><label>Jitter (ms)</label><input id="l4" type="number" value="60" oninput="calcLat()"></div>
+    <div><label>Décodage (ms)</label><input id="l5" type="number" value="20" oninput="calcLat()"></div>
+  </div>
+  <div class="result" id="rLat"></div>
+
+  <h3>8. VoIP — Bande passante</h3>
+  <div class="calc">
+    <div><label>Nb appels</label><input id="voN" type="number" value="50" oninput="calcVoIP()"></div>
+    <div><label>Débit/appel (kbit/s)</label><input id="voD" type="number" value="87.2" oninput="calcVoIP()"></div>
+  </div>
+  <div class="result" id="rVoIP"></div>
+</div>
+</section>
+
+<!-- HUFFMAN -->
+<section id="huff" class="section">
+<div class="card">
+  <h2>🌳 Calculateur de Huffman</h2>
+  <div class="calc">
+    <div style="grid-column:1/-1"><label>Symboles (séparés par ,)</label><input id="hSym" type="text" value="A,B,C,D"></div>
+    <div style="grid-column:1/-1"><label>Fréquences (séparées par ,)</label><input id="hFreq" type="text" value="3,1,1,3"></div>
+  </div>
+  <button onclick="calcHuff()">Calculer les codes</button>
+  <div class="result" id="rHuff"></div>
+</div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz" class="section">
+<div class="card">
+  <h2>❓ Quiz — Barème +1 / −0.5 / 0 (30 questions)</h2>
+  <p style="color:var(--muted);font-size:.85rem">Sélectionnez une réponse par question, puis corrigez. Score officiel.</p>
+  <div id="quizContainer"></div>
+  <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+    <button onclick="gradeQuiz()" style="background:linear-gradient(135deg,var(--ok),#16a34a);color:#0a0f1e;border:none;padding:11px 18px;border-radius:9px;cursor:pointer;font-weight:700">Corriger</button>
+    <button onclick="resetQuiz()" style="background:var(--card2);color:var(--text);border:1px solid var(--border);padding:11px 18px;border-radius:9px;cursor:pointer;font-weight:600">Réinitialiser</button>
+  </div>
+  <div class="result" id="quizScore"></div>
+</div>
+</section>
+
+<!-- FLASHCARDS -->
+<section id="flash" class="section">
+<div class="card">
+  <h2>🃏 Flashcards — Répétition espacée</h2>
+  <p style="color:var(--muted);font-size:.85rem">Espace = retourner · ←/→ = naviguer · Marquez "Je maîtrise" pour suivre.</p>
+  <div class="flashcard" id="fc" onclick="flipFc()"><div class="front" id="fcFront"></div><div class="back" id="fcBack"></div></div>
+  <div class="fc-nav">
+    <button onclick="prevFc()">◀ Précédent</button>
+    <button onclick="flipFc()">Retourner</button>
+    <button onclick="nextFc()">Suivant ▶</button>
+    <button onclick="shuffleFc()">🔀 Mélanger</button>
+  </div>
+  <div class="mastery">
+    <button class="rev" onclick="markFc('rev')">À revoir</button>
+    <button class="ok" onclick="markFc('ok')">Je maîtrise</button>
+  </div>
+  <div id="fcStatus" style="margin-top:8px;font-size:.85rem;color:var(--muted)"></div>
+  <div id="fcStats" style="margin-top:6px;font-size:.8rem;color:var(--accent)"></div>
+</div>
+</section>
+
+</div>
+
+<script>
+const _ids = ['aFe', 'aB', 'aCh', 'aT', 'rAudio', 'sB', 'rSNR', 'nyF', 'rNyq', 'qB', 'qMax', 'qMin', 'rQuant', 'vW', 'vH', 'vBpp', 'vFps', 'rVideo', 'iW', 'iH', 'iMode', 'iComp', 'rImg', 'mS', 'mI', 'mP', 'mB', 'nI', 'nP', 'nB', 'rMPEG', 'l1', 'l2', 'l3', 'l4', 'l5', 'rLat', 'voN', 'voD', 'rVoIP', 'hSym', 'hFreq', 'rHuff', 'quizContainer', 'quizScore', 'prog', 'progTxt', 'fc', 'fcFront', 'fcBack', 'fcStatus', 'fcStats'];
+_ids.forEach(function(id){ try{ window[id]=document.getElementById(id); }catch(e){} });
+
+const navBtns=document.querySelectorAll('#nav button');
+navBtns.forEach(b=>b.addEventListener('click',()=>{
+  navBtns.forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.getElementById(b.dataset.s).classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  localStorage.setItem('lastSection',b.dataset.s);
+}));
+function toggleSol(btn){const s=btn.nextElementSibling;s.classList.toggle('show');btn.textContent=s.classList.contains('show')?'Masquer solution':'Voir solution';}
+
+// ===== CALCULATORS (live) =====
+function calcAudio(){const Fe=+aFe.value,B=+aB.value,ch=+aCh.value,t=+aT.value;if(!Fe||!B||!ch||!t){rAudio.innerHTML='';return;}const D=Fe*B*ch;const S=D*t/8;rAudio.innerHTML=`Débit = ${D.toLocaleString()} bit/s = ${(D/1000).toFixed(2)} kbit/s<br>Taille = ${S.toLocaleString()} octets = ${(S/1e6).toFixed(3)} Mo = ${(S/1048576).toFixed(3)} Mio`;}
+function calcSNR(){const B=+sB.value;if(!B){rSNR.innerHTML='';return;}rSNR.innerHTML=`SNR = 6.02×${B}+1.25 = <b>${(6.02*B+1.25).toFixed(2)} dB</b> · Niveaux = 2^${B} = ${Math.pow(2,B).toLocaleString()}`;}
+function calcNyq(){const f=+nyF.value;if(!f){rNyq.innerHTML='';return;}rNyq.innerHTML=`Fe_min (Nyquist) = 2 × ${f} = <b>${(2*f).toLocaleString()} Hz</b>`;}
+function calcQuant(){const B=+qB.value,Vmax=+qMax.value,Vmin=+qMin.value;if(!B){rQuant.innerHTML='';return;}const N=Math.pow(2,B);const Q=(Vmax-Vmin)/N;rQuant.innerHTML=`Niveaux = 2^${B} = ${N.toLocaleString()}<br>Pas Q = (${Vmax}−${Vmin})/${N} = <b>${Q.toFixed(6)}</b><br>SNR ≈ ${(6.02*B+1.25).toFixed(2)} dB`;}
+function calcVideo(){const W=+vW.value,H=+vH.value,bpp=+vBpp.value,fps=+vFps.value;if(!W||!H||!bpp||!fps){rVideo.innerHTML='';return;}const D=W*H*bpp*fps;rVideo.innerHTML=`Débit = ${D.toLocaleString()} bit/s = ${(D/1e6).toFixed(2)} Mbit/s = ${(D/1e9).toFixed(3)} Gbit/s`;}
+function calcImg(){const W=+iW.value,H=+iH.value,bpp=+iMode.value,comp=+iComp.value;if(!W||!H){rImg.innerHTML='';return;}const S=W*H*bpp/8;const compSize=S*(comp/100);rImg.innerHTML=`Taille brute = ${S.toLocaleString()} octets = ${(S/1e6).toFixed(3)} Mo<br>Avec JPEG ${comp}%: ≈ ${(compSize/1e6).toFixed(3)} Mo`;}
+function calcMPEG(){const S=+mS.value,I=+mI.value,P=+mP.value,B=+mB.value,_nI=+nI.value,_nP=+nP.value,_nB=+nB.value;if(!S){rMPEG.innerHTML='';return;}const total=_nI+_nP+_nB;const poids=_nI*I/100+_nP*P/100+_nB*B/100;const avg=poids/total;rMPEG.innerHTML=`GOP = ${total} images<br>Poids GOP = ${poids.toFixed(2)} (unités image)<br>Moyenne = ${avg.toFixed(4)}<br>Taille compressée = <b>${(S*avg).toFixed(2)} Mo</b> (ratio ${(1/avg).toFixed(1)}:1)`;}
+function calcLat(){const s=+l1.value+ +l2.value+ +l3.value+ +l4.value+ +l5.value;rLat.innerHTML=`Latence totale = <b>${s} ms</b>` + (s>150?' <span style="color:var(--err)">⚠ dépasse 150 ms (temps réel)</span>':' <span style="color:var(--ok)">✓ OK temps réel</span>');}
+function calcVoIP(){const n=+voN.value,d=+voD.value;if(!n||!d){rVoIP.innerHTML='';return;}const total=n*d;rVoIP.innerHTML=`Bande totale = ${n} × ${d} = <b>${total.toFixed(1)} kbit/s = ${(total/1000).toFixed(3)} Mbit/s</b>`;}
+function calcHuff(){const syms=hSym.value.split(',').map(s=>s.trim()).filter(Boolean);const freqs=hFreq.value.split(',').map(x=>parseFloat(x.trim())).filter(x=>!isNaN(x));if(syms.length!==freqs.length||!syms.length){rHuff.innerHTML='Erreur: nombre de symboles ≠ fréquences';return;}let forest=syms.map((s,i)=>({sym:s,freq:freqs[i],left:null,right:null,code:''}));while(forest.length>1){forest.sort((a,b)=>a.freq-b.freq);const a=forest.shift(),b=forest.shift();forest.push({sym:a.sym+','+b.sym,freq:a.freq+b.freq,left:a,right:b});}const codes={};function walk(n,prefix){if(!n.left&&!n.right){codes[n.sym]=prefix||'0';return;}if(n.left)walk(n.left,prefix+'0');if(n.right)walk(n.right,prefix+'1');}walk(forest[0],'');const totalFreq=freqs.reduce((a,b)=>a+b,0);let entropy=0,avgLen=0,out='Symbole → Code (longueur)<br>';syms.forEach((s,i)=>{const p=freqs[i]/totalFreq;const L=codes[s].length;entropy-=p*Math.log2(p);avgLen+=p*L;out+=`${s} (freq ${freqs[i]}) → <b>${codes[s]}</b> (${L} bits)<br>`;});out+=`<br>Entropie = ${entropy.toFixed(3)} bit/symbole<br>Longueur moyenne = ${avgLen.toFixed(3)} bit/symbole<br>Efficacité = ${(entropy/avgLen*100).toFixed(1)}%`;rHuff.innerHTML=out;}
+// init calculators
+calcAudio();calcSNR();calcNyq();calcQuant();calcVideo();calcImg();calcMPEG();calcLat();calcVoIP();calcHuff();
+
+// ===== QUIZ (30 questions) =====
+const quizData=[
+ {cat:'Audio',q:"Fe minimale pour un signal de 3400 Hz max?",o:["3400 Hz","6800 Hz","8000 Hz","44100 Hz"],a:1,exp:"Nyquist: Fe≥2×fmax=6800 Hz."},
+ {cat:'Audio',q:"Débit CD stéréo 44.1kHz 16bits en kbit/s?",o:["705.6","1411.2","2822.4","320"],a:1,exp:"44100×16×2=1 411 200 bit/s."},
+ {cat:'Audio',q:"SNR pour 16 bits ≈?",o:["49.41 dB","97.57 dB","145.73 dB","6.02 dB"],a:1,exp:"6.02×16+1.25=97.57 dB."},
+ {cat:'Audio',q:"Taille 1 min CD audio en Mo?",o:["5.29","10.58","0.95","1.41"],a:1,exp:"1 411 200×60/8=10 584 000 octets."},
+ {cat:'Audio',q:"Nyquist: Fe_min = ?",o:["fmax","2×fmax","fmax/2","4×fmax"],a:1,exp:"Shannon-Nyquist."},
+ {cat:'Audio',q:"FLAC réduction typique?",o:["~91%","~50%","~10%","~99%"],a:1,exp:"~50% sans perte."},
+ {cat:'Audio',q:"VBR vs CBR?",o:["VBR débit constant","CBR débit variable","VBR économise bande passante","CBR sans perte"],a:2,exp:"VBR variable."},
+ {cat:'Audio',q:"MP3 utilise combien de sous-bandes?",o:["8","16","32","64"],a:2,exp:"32 sous-bandes."},
+ {cat:'Audio',q:"Opus latence?",o:["5 ms","50 ms","150 ms","500 ms"],a:0,exp:"Opus: latence 5 ms."},
+ {cat:'Audio',q:"G.711 débit?",o:["32 kbit/s","64 kbit/s","128 kbit/s","256 kbit/s"],a:1,exp:"8 kHz × 8 bits = 64 kbit/s."},
+ {cat:'Image',q:"Image I dans MPEG signifie?",o:["Predicted","Bidirectionnelle","Intra (complète)","Interpolée"],a:2,exp:"I = image complète de référence."},
+ {cat:'Image',q:"GOP IBBPBBIBBP a taille?",o:["8","10","12","6"],a:1,exp:"10 caractères."},
+ {cat:'Image',q:"JPEG chaîne: première étape?",o:["DCT","Quantification","RGB→YCbCr","Huffman"],a:2,exp:"RGB→YCbCr d'abord."},
+ {cat:'Image',q:"Sous-échantillonnage 4:2:0 réduction?",o:["-25%","-50%","-75%","-90%"],a:1,exp:"−50% (Y plein, Cb/Cr ÷4)."},
+ {cat:'Image',q:"DCT produit?",o:["pixels","1 DC + 63 AC","vecteurs","coefficients RGB"],a:1,exp:"1 DC (moyenne) + 63 AC (détails)."},
+ {cat:'Image',q:"Huffman code?",o:["Longueur fixe","Longueur variable, fréquents→courts","Sans perte uniquement","Avec perte"],a:1,exp:"Code à longueur variable."},
+ {cat:'Vidéo',q:"Débit Full HD 1080p 30fps 24bits en Mbit/s?",o:["149.3","1492.99","298.6","746.5"],a:1,exp:"1920×1080×24×30=1.49 Gbit/s."},
+ {cat:'Vidéo',q:"H.264 compression typique?",o:["10:1","50:1","100:1","1000:1"],a:2,exp:"≈100:1."},
+ {cat:'Vidéo',q:"SAD sert à?",o:["Compresser","Estimer le mouvement","Quantifier","Encoder l'audio"],a:1,exp:"Somme des différences absolues pour le meilleur match."},
+ {cat:'Vidéo',q:"B-frame nécessite?",o:["Rien","Un buffer (latence)","Plus de bande passante","Moins de qualité"],a:1,exp:"Buffer car dépend du futur."},
+ {cat:'Réseau',q:"Protocole VOD?",o:["UDP","TCP","ICMP","RTP"],a:1,exp:"TCP pour VOD."},
+ {cat:'Réseau',q:"Protocole temps réel interactif?",o:["TCP","HTTP","UDP","FTP"],a:2,exp:"UDP (RTP)."},
+ {cat:'Réseau',q:"PTS sert à?",o:["Décodage","Affichage","Compression","Transport"],a:1,exp:"Presentation Time Stamp."},
+ {cat:'Réseau',q:"DTS pour image B est?",o:["< PTS","= PTS","> PTS","0"],a:2,exp:"DTS>PTS pour les B."},
+ {cat:'Réseau',q:"Topologie IPTV?",o:["Broadcast","Multicast","Unicast","Anycast"],a:1,exp:"Multicast."},
+ {cat:'Réseau',q:"Latence Meet typique?",o:["20 ms","170 ms","20 s","5 s"],a:1,exp:"20+30+40+60+20=170 ms."},
+ {cat:'Réseau',q:"DASH sert à?",o:["Chiffrer","Adapter le débit","Compresser","Multiplexer"],a:1,exp:"ABR."},
+ {cat:'Réseau',q:"Gigue (jitter) = ?",o:["Perte de paquets","Variation de délai","Débit","Latence fixe"],a:1,exp:"Variation de délai."},
+ {cat:'Réseau',q:"1 Mo binaire = ?",o:["1000 octets","1024 octets","1024² octets","1000² octets"],a:2,exp:"1024² octets."},
+ {cat:'Haptique',q:"Fréquence boucle haptique?",o:["24 Hz","60 Hz","1000 Hz","44100 Hz"],a:2,exp:"1000 Hz minimum."},
+];
+const userAns={};
+function renderQuiz(){
+  const c=document.getElementById('quizContainer');
+  c.innerHTML=quizData.map((q,i)=>`
+    <div class="quiz-q" id="qq${i}">
+      <span class="badge ${q.cat==='Audio'?'audio':q.cat==='Image'?'video':q.cat==='Vidéo'?'video':q.cat==='Réseau'?'net':'math'}">${q.cat}</span>
+      <b>${i+1}. ${q.q}</b>
+      ${q.o.map((o,j)=>`<label class="opt" data-i="${i}" data-j="${j}">${o}</label>`).join('')}
+      <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
+        <button class="qverify" data-i="${i}" style="background:linear-gradient(135deg,var(--accent),#0284c7);color:#0a0f1e;border:none;padding:7px 14px;border-radius:7px;cursor:pointer;font-weight:600;font-size:.85rem">Vérifier</button>
+        <button class="qreset" data-i="${i}" style="background:var(--card2);color:var(--text);border:1px solid var(--border);padding:7px 14px;border-radius:7px;cursor:pointer;font-size:.85rem">Réinitialiser</button>
+      </div>
+      <div class="exp" id="exp${i}" style="display:none;margin-top:8px;color:var(--muted);font-size:.88rem"></div>
+      <div class="qstatus" id="qst${i}" style="margin-top:6px;font-size:.85rem;font-weight:600"></div>
+    </div>`).join('');
+  document.querySelectorAll('.quiz-q .opt').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const i=+el.dataset.i,j=+el.dataset.j;
+      userAns[i]=j;
+      document.querySelectorAll(`.quiz-q .opt[data-i="${i}"]`).forEach(x=>x.classList.remove('selected'));
+      el.classList.add('selected');
+      // reset visual state on re-select
+      document.querySelectorAll(`.quiz-q .opt[data-i="${i}"]`).forEach(x=>x.classList.remove('correct','wrong'));
+      document.getElementById('exp'+i).style.display='none';
+      document.getElementById('qst'+i).textContent='';
+    });
+  });
+  document.querySelectorAll('.qverify').forEach(btn=>{
+    btn.addEventListener('click',()=>verifyQuestion(+btn.dataset.i));
+  });
+  document.querySelectorAll('.qreset').forEach(btn=>{
+    btn.addEventListener('click',()=>resetQuestion(+btn.dataset.i));
+  });
+}
+function verifyQuestion(i){
+  const q=quizData[i];
+  const chosen=userAns[i];
+  const opts=document.querySelectorAll(`.quiz-q .opt[data-i="${i}"]`);
+  opts.forEach(el=>{
+    el.classList.remove('selected');
+    const v=+el.dataset.j;
+    if(v===q.a) el.classList.add('correct');
+    if(v===chosen && v!==q.a) el.classList.add('wrong');
+  });
+  const exp=document.getElementById('exp'+i);
+  exp.style.display='block';
+  exp.innerHTML=`<b>Explication:</b> ${q.exp}`;
+  const st=document.getElementById('qst'+i);
+  if(chosen===undefined){st.textContent='⚠ Aucune réponse sélectionnée';st.style.color='var(--warn)';}
+  else if(chosen===q.a){st.textContent='✓ Correct (+1)';st.style.color='var(--ok)';}
+  else{st.textContent='✗ Incorrect (−0.5)';st.style.color='var(--err)';}
+  // update global score
+  updateGlobalScore();
+}
+function resetQuestion(i){
+  delete userAns[i];
+  document.querySelectorAll(`.quiz-q .opt[data-i="${i}"]`).forEach(el=>el.classList.remove('correct','wrong','selected'));
+  document.getElementById('exp'+i).style.display='none';
+  document.getElementById('qst'+i).textContent='';
+  updateGlobalScore();
+}
+function updateGlobalScore(){
+  let score=0,answered=0;
+  quizData.forEach((q,i)=>{
+    const chosen=userAns[i];
+    // only count if verified (status shown)
+    const st=document.getElementById('qst'+i);
+    if(st && st.textContent){answered++; if(chosen===q.a) score+=1; else score-=0.5;}
+  });
+  if(answered===0){document.getElementById('quizScore').innerHTML='';return;}
+  const pct=Math.round(Math.max(0,score)/quizData.length*100);
+  document.getElementById('quizScore').innerHTML=`Score: <b>${score.toFixed(1)}/${quizData.length}</b> (${pct}%) · Vérifié: ${answered}/${quizData.length}`;
+  const p=Math.min(100,(Math.max(0,score)/quizData.length)*100);
+  document.getElementById('prog').style.width=p+'%';
+  document.getElementById('progTxt').textContent=Math.round(p)+'%';
+}
+function gradeQuiz(){quizData.forEach((q,i)=>{if(userAns[i]!==undefined) verifyQuestion(i);});}
+function resetQuiz(){
+  for(const k in userAns) delete userAns[k];
+  document.querySelectorAll('.quiz-q .opt').forEach(el=>el.classList.remove('correct','wrong','selected'));
+  document.querySelectorAll('.exp').forEach(e=>{e.style.display='none';});
+  document.querySelectorAll('.qstatus').forEach(e=>{e.textContent='';});
+  document.getElementById('quizScore').innerHTML='';
+  document.getElementById('prog').style.width='0%';
+  document.getElementById('progTxt').textContent='0%';
+}
+renderQuiz();
+
+// ===== FLASHCARDS =====
+const cards=[
+ ["Quelle est la formule du débit audio?", "D = Fe × B × canaux (bit/s). Ex: CD = 44100×16×2 = 1.41 Mbit/s."],
+ ["Quelle est la formule de la taille d'un fichier audio?", "S = D × durée / 8 (octets). Ex: 1 min CD = 10.58 Mo."],
+ ["Quel est le SNR pour B bits?", "SNR ≈ 6.02×B + 1.25 dB. 16 bits → 97.57 dB."],
+ ["Quelle est la condition de Nyquist?", "Fe ≥ 2 × fmax. Voix (4 kHz) → 8 kHz. CD (20 kHz) → 44.1 kHz."],
+ ["Combien de niveaux pour B bits?", "2^B niveaux. 8 bits = 256, 16 bits = 65 536."],
+ ["Qu'est-ce que le masquage fréquentiel?", "Un son fort masque un son faible proche en fréquence. Base du MP3."],
+ ["Quelle est la différence CBR/VBR?", "CBR = débit constant. VBR = débit variable, économise ~30%."],
+ ["Qu'est-ce qu'une image I en MPEG?", "Image complète de référence (intra). Permet le seek."],
+ ["Qu'est-ce qu'une image P?", "Prédite depuis l'image précédente (vecteurs de mouvement + résidu)."],
+ ["Qu'est-ce qu'une image B?", "Bidirectionnelle (avant+après). La plus légère mais nécessite un buffer."],
+ ["Qu'est-ce qu'un GOP?", "Group of Pictures: séquence d'images entre deux I (ex: IBBPBBIBBP = 10)."],
+ ["Que signifie PTS?", "Presentation Time Stamp = instant d'affichage."],
+ ["Que signifie DTS?", "Decoding Time Stamp = instant de décodage. Pour B: DTS > PTS."],
+ ["Quelle topologie pour l'IPTV?", "Multicast (un flux par groupe via IGMP)."],
+ ["Quelle topologie pour Netflix?", "Unicast (un flux par client, ABR)."],
+ ["Quelle topologie pour la TNT?", "Broadcast (un vers tous)."],
+ ["Qu'est-ce que DASH?", "Dynamic Adaptive Streaming: adaptation du débit selon la bande passante."],
+ ["Qu'est-ce que la gigue (jitter)?", "Variation du délai de transmission. Compensée par un buffer de jitter."],
+ ["Quel est le débit d'un flux Full HD brut?", "1920×1080×24×30 = 1.49 Gbit/s."],
+ ["Quel est le taux de compression H.264?", "≈ 100:1."],
+ ["Quelle est la chaîne JPEG?", "RGB→YCbCr→sous-éch. 4:2:0→DCT 8×8→quantification→zigzag→RLE→Huffman."],
+ ["Que produit la DCT?", "1 coefficient DC (moyenne) + 63 coefficients AC (détails)."],
+ ["À quoi sert le SAD?", "Somme des différences absolues: trouve le meilleur match pour l'estimation de mouvement."],
+ ["Qu'est-ce que le PSNR?", "Peak Signal-to-Noise Ratio. >40 dB excellent, 30-40 bon, <30 dégradé."],
+ ["Quelle est la fréquence de la boucle haptique?", "1000 Hz minimum (perception jusqu'à 500 Hz)."],
+ ["Qu'est-ce que la passivité en haptique?", "Le système ne génère pas d'énergie: Re(Z) ≥ 0."],
+ ["Quelle est la formule de Shannon-Hartley?", "C = B × log₂(1 + SNR) (capacité max d'un canal)."],
+ ["Qu'est-ce que le MCU?", "Multipoint Control Unit: mixe les flux (CPU élevé, bande faible)."],
+ ["Qu'est-ce que le SFU?", "Selective Forwarding Unit: relaie les flux (CPU faible, bande élevée)."],
+ ["Quel est le débit du G.711?", "64 kbit/s (8 kHz, 8 bits)."],
+ ["Quels sont les débits de l'Opus?", "6 à 510 kbit/s, latence 5 ms (VoIP)."],
+ ["Pourquoi AAC > MP3?", "MDCT 1024 bandes: +30% d'efficacité. 128 kbit/s AAC ≈ 192 kbit/s MP3."],
+ ["Quelle est la taille d'un paquet MPEG-2 TS?", "188 octets (4 header + 184 charge utile)."],
+ ["Qu'est-ce que le RTP?", "Real-time Transport Protocol: N° séquence + timestamp sur UDP."],
+ ["Qu'est-ce que le RTCP?", "Feedback de qualité: perte, gigue, statistiques."],
+ ["Qu'est-ce que WebRTC?", "RTP + SRTP + RTCP + ICE (visio P2P)."],
+ ["Qu'est-ce que le SVC?", "Scalable Video Coding: couches de base + amélioration (spatial/temporel/qualité)."],
+ ["Qu'est-ce que le FEC?", "Forward Error Correction: correction d'erreurs sans retransmission."],
+ ["Qu'est-ce que le deadband haptique?", "Compression: on supprime les variations < JND (7-10%)."],
+ ["Quelle est la latence typique d'une visio?", "170 ms (capture 20 + encodage 30 + réseau 40 + jitter 60 + décodage 20)."],
+ ["Qu'est-ce que le RTSP?", "Protocole de contrôle (SETUP, PLAY, PAUSE, TEARDOWN). Ne transporte pas les données (utilise RTP)."],
+ ["Qu'est-ce que le SIP?", "Signalisation VoIP: INVITE, REGISTER, BYE. Composants: UAC, UAS, Proxy, Registrar."],
+ ["Qu'est-ce que WebRTC?", "RTP + SRTP + RTCP + ICE + DTLS. Communication P2P dans le navigateur, <150 ms."],
+ ["HLS vs DASH?", "HLS: .m3u8/.ts (Apple). DASH: .mpd/fMP4 (standard MPEG). Les deux font de l'ABR."],
+ ["Qu'est-ce que le SRT?", "Secure Reliable Transport: streaming faible latence sur réseaux non fiables (chiffré, ARQ)."],
+ ["Qu'est-ce que le RTMP?", "Protocole Adobe pour l'ingestion (OBS→serveur). Faible latence. RTMPS = chiffré."],
+ ["Qu'est-ce que QUIC?", "Transport sur UDP: résout le HoL blocking, 0-RTT, chiffrement intégré. Base de HTTP/3."],
+ ["Quels sont les types d'applications multimédia?", "Stocké (VoD, TCP), Live (streaming, 2-30s), Temps réel interactif (<150 ms, UDP)."],
+ ["Qu'est-ce que le MOS?", "Mean Opinion Score: note de 1 à 5 donnée par des humains."],
+];
+let fcIdx=0;
+let fcOrder=[...Array(cards.length).keys()];
+const mastered=new Set(JSON.parse(localStorage.getItem('fcMastered')||'[]'));
+function showFc(){document.getElementById('fcFront').textContent=cards[fcOrder[fcIdx]][0];document.getElementById('fcBack').textContent=cards[fcOrder[fcIdx]][1];document.getElementById('fc').classList.remove('flipped');updateFcStatus();}
+function flipFc(){document.getElementById('fc').classList.toggle('flipped');}
+function nextFc(){fcIdx=(fcIdx+1)%fcOrder.length;showFc();}
+function prevFc(){fcIdx=(fcIdx-1+fcOrder.length)%fcOrder.length;showFc();}
+function shuffleFc(){for(let i=fcOrder.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[fcOrder[i],fcOrder[j]]=[fcOrder[j],fcOrder[i]];}fcIdx=0;showFc();}
+function markFc(type){const realIdx=fcOrder[fcIdx];if(type==='ok') mastered.add(realIdx); else mastered.delete(realIdx);localStorage.setItem('fcMastered',JSON.stringify([...mastered]));updateFcStatus();updateFcStats();}
+function updateFcStatus(){document.getElementById('fcStatus').textContent=`Carte ${fcIdx+1}/${fcOrder.length} · Maîtrisées: ${mastered.size}/${cards.length}`;}
+function updateFcStats(){document.getElementById('fcStats').textContent=`Progression: ${Math.round(mastered.size/cards.length*100)}% maîtrisées`;}
+showFc();updateFcStats();
+document.addEventListener('keydown',e=>{
+  const flash=document.getElementById('flash');
+  if(flash && flash.classList.contains('active')){
+    if(e.code==='Space'){e.preventDefault();flipFc();}
+    if(e.code==='ArrowRight') nextFc();
+    if(e.code==='ArrowLeft') prevFc();
+  }
+});
+const last=localStorage.getItem('lastSection');
+if(last && document.getElementById(last)){const btn=document.querySelector('[data-s="'+last+'"]');if(btn) btn.click();}
+</script>
+</body>
+</html>

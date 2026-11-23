@@ -1,0 +1,1206 @@
+{
+  "version": "1.0",
+  "source": "tds/Fiches_TD_Communication_Multimedia_TD1-TD6_corrige_graphique.md (exercise statements only) + tds_multimedia_v4(1).html (Jupyter export) + course PDFs",
+  "generated": "2026-11-23",
+  "tds": [
+    {
+      "id": "TD1",
+      "title": "Audio Numérisation & Compression",
+      "exercises": [
+        {
+          "num": 1,
+          "topic": "Débit, taille, SNR, codecs (CD 1 min)",
+          "formulas": [
+            "D=Fe×B×C",
+            "S=D×t/8",
+            "SNR≈6.02B+1.25",
+            "FLAC 50%",
+            "MP3 128k ~91%"
+          ],
+          "type": "calc",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD1 Ex1",
+          "priority": "H",
+          "golden": {
+            "debit_kbps": 1411.2,
+            "taille_MB_decimal": 10.584,
+            "taille_MiB_binary": 10.09,
+            "SNR_8b": 49.41,
+            "SNR_16b": 97.57,
+            "SNR_24b": 145.73,
+            "FLAC_MB": 5.29,
+            "MP3_128k_MB": 0.96
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 2,
+          "topic": "Nyquist voix (100–3400 Hz)",
+          "formulas": [
+            "Fe_min = 2×fmax"
+          ],
+          "type": "calc",
+          "difficulty": 1,
+          "status": "etudié",
+          "source": "TD1 Ex2",
+          "priority": "H",
+          "golden": {
+            "Fe_min_Hz": 6800,
+            "Fe_pratique_Hz": 8000
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 3,
+          "topic": "Numérisation v(t) fe=20Hz, B=5bits",
+          "formulas": [
+            "Te=1/fe",
+            "Q=(Vmax-Vmin)/2^B",
+            "codes binaires",
+            "erreur e"
+          ],
+          "type": "calc",
+          "difficulty": 3,
+          "status": "etudié",
+          "source": "TD1 Ex3",
+          "priority": "H",
+          "notes": "Signal reconstructed from spline points (16 subdivisions over 2s, y_grid/8). Te=0.05s, Q=2/32=0.0625. Implement interactive digitiser.",
+          "golden": {
+            "Te_s": 0.05,
+            "Q": 0.0625,
+            "niveaux": 32
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high",
+          "approximation_note": "Curve reconstructed from spline points (16 subdivisions over 2s). Approximation noted."
+        },
+        {
+          "num": 4,
+          "topic": "Taille fichier stéréo 4min15s, 100Hz, 16bits",
+          "formulas": [
+            "S = Fe×B×C×t/8"
+          ],
+          "type": "calc",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD1 Ex4",
+          "priority": "H",
+          "golden": {
+            "taille_B": 102000,
+            "taille_MB": 0.102
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 5,
+          "topic": "Fe inverse: taille 290Mo, 3min30s, 16bits, stéréo",
+          "formulas": [
+            "Fe = (Taille×8)/(B×C×t)"
+          ],
+          "type": "calc",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD1 Ex5",
+          "priority": "H",
+          "golden": {
+            "Fe_Hz": 345238,
+            "note": "decimal convention"
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 6,
+          "topic": "Fe inverse: taille 325Mo, 10min, 8bits, mono",
+          "formulas": [
+            "Fe = (Taille×8)/(B×C×t)"
+          ],
+          "type": "calc",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD1 Ex6",
+          "priority": "H",
+          "golden": {
+            "Fe_Hz": 541667,
+            "note": "decimal convention"
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 7,
+          "topic": "Durée inverse: 300Mo, CD stéréo",
+          "formulas": [
+            "t = (Taille×8)/(Fe×B×C)"
+          ],
+          "type": "calc",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD1 Ex7",
+          "priority": "H",
+          "golden": {
+            "duree_s": 1700.6,
+            "duree_min": 28.34
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 8,
+          "topic": "Durée inverse: 200Mo, 96kHz, 16bits, stéréo",
+          "formulas": [
+            "t = (Taille×8)/(Fe×B×C)"
+          ],
+          "type": "calc",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD1 Ex8",
+          "priority": "H",
+          "golden": {
+            "duree_s": 520.8,
+            "duree_min": 8.68
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 9,
+          "topic": "Taille 1h20min CD stéréo",
+          "formulas": [
+            "S = Fe×B×C×t/8"
+          ],
+          "type": "calc",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD1 Ex9",
+          "priority": "H",
+          "golden": {
+            "taille_MB": 846.72,
+            "equiv_CD": 1.2
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 10,
+          "topic": "Résolution à partir débit: 256kbps, 44.1kHz, mono, 600Mo",
+          "formulas": [
+            "N = Débit/(Fe×C)"
+          ],
+          "type": "calc",
+          "difficulty": 3,
+          "status": "etudié",
+          "source": "TD1 Ex10",
+          "priority": "H",
+          "golden": {
+            "bits": 5.8,
+            "note": "non-entier → fichier compressé",
+            "duree_s": 18750
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 11,
+          "topic": "Combos CBR 512kbps",
+          "formulas": [
+            "Fe×B×C = 512000"
+          ],
+          "type": "calc",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD1 Ex11",
+          "priority": "H",
+          "golden": {
+            "combos": [
+              "32kHz/16b/mono",
+              "16kHz/16b/stereo",
+              "32kHz/8b/stereo",
+              "8kHz/16b/4canaux"
+            ]
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 12,
+          "topic": "VBR vs CBR 5min",
+          "formulas": [
+            "VBR = BR_appel×t_parole + BR_silence×t_silence",
+            "CBR = BR×t_total"
+          ],
+          "type": "calc",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD1 Ex12",
+          "priority": "H",
+          "golden": {
+            "VBR_kbit": 28320,
+            "CBR_kbit": 38400,
+            "economie_pct": 26.2
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 13,
+          "topic": "Audacity: WAV→256k→8k→256k",
+          "formulas": [],
+          "type": "lab",
+          "difficulty": 3,
+          "status": "etudié",
+          "source": "TD1 Ex13",
+          "priority": "M",
+          "notes": "Perte irréversible compression avec perte. Reconvertir ne restaure pas la qualité.",
+          "solution_status": "suggested-answer",
+          "confidence": "medium"
+        },
+        {
+          "num": 14,
+          "topic": "Comparatif 8 vs 32 bits WAV",
+          "formulas": [],
+          "type": "lab",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD1 Ex14",
+          "priority": "M",
+          "notes": "32 bits: meilleur SNR, dynamique plus large, taille ×4. 8 bits: bruit quantification audible.",
+          "solution_status": "suggested-answer",
+          "confidence": "medium"
+        },
+        {
+          "num": 15,
+          "topic": "Codecs: WAV 512k, MP3 96k, GSM 13k",
+          "formulas": [],
+          "type": "lab",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD1 Ex15",
+          "priority": "M",
+          "notes": "Tableau qualité/taille. WAV max qualité/taille. MP3 bon compromis. GSM qualité téléphonique.",
+          "solution_status": "suggested-answer",
+          "confidence": "medium"
+        },
+        {
+          "num": 16,
+          "topic": "QCM: Taille CD 15min (binaire)",
+          "formulas": [
+            "S = Fe×B×C×t/8 / 1024²"
+          ],
+          "type": "qcm",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD1 Ex16",
+          "priority": "H",
+          "golden": {
+            "answer": "B",
+            "taille_MiB": 151.4,
+            "convention": "binary"
+          },
+          "solution_status": "suggested-answer",
+          "confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "TD2",
+      "title": "Image & Vidéo",
+      "exercises": [
+        {
+          "num": 1,
+          "topic": "Huffman probabilités (21,95,169,243 ; 3/8,1/8,1/8,3/8)",
+          "formulas": [
+            "Arbre binaire",
+            "Codes variables",
+            "Entropie"
+          ],
+          "type": "calc",
+          "difficulty": 3,
+          "status": "etudié",
+          "source": "TD2 Ex1",
+          "priority": "H",
+          "golden": {
+            "codes": {
+              "243": "0",
+              "21": "10",
+              "95": "110",
+              "169": "111"
+            },
+            "avg_bits": 1.875,
+            "entropy": 1.811
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 2,
+          "topic": "Huffman sur matrice 8×8 (niveaux 0,63,127,255)",
+          "formulas": [
+            "Fréquences",
+            "Arbre",
+            "Codage",
+            "Remplacement"
+          ],
+          "type": "calc",
+          "difficulty": 3,
+          "status": "etudié",
+          "source": "TD2 Ex2",
+          "priority": "H",
+          "golden": {
+            "frequences": {
+              "0": 20,
+              "63": 24,
+              "127": 28,
+              "255": 8
+            },
+            "total_pixels": 64
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 3,
+          "topic": "Débit vidéo brut Full HD 1080p 30fps 24bpp",
+          "formulas": [
+            "D = L×H×bpp×fps"
+          ],
+          "type": "calc",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD2 Ex3",
+          "priority": "H",
+          "golden": {
+            "debit_Mbps": 1492.99,
+            "debit_Gbps": 1.493
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 4,
+          "topic": "Format TV HD 1280×720 25fps, Y=8b, C=4b",
+          "formulas": [
+            "12 bits/pixel → D = L×H×12×fps"
+          ],
+          "type": "calc",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD2 Ex4",
+          "priority": "H",
+          "golden": {
+            "debit_Mbps": 276.48
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 5,
+          "topic": "Compression MPEG-1 GOP IBBPBBIBBP (2min, 60Mo)",
+          "formulas": [
+            "GOP=10",
+            "I=2, P=2, B=6",
+            "poids=2×100%+2×50%+6×20%=4.2",
+            "moyenne=0.42"
+          ],
+          "type": "calc",
+          "difficulty": 3,
+          "status": "etudié",
+          "source": "TD2 Ex5",
+          "priority": "H",
+          "golden": {
+            "GOP_size": 10,
+            "taille_compressee_Mo": 25.2,
+            "ratio": 2.38
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 6,
+          "topic": "Tableau résolutions 24fps 24bpp (144p…1080p)",
+          "formulas": [
+            "Binary convention (2^20, 2^30)"
+          ],
+          "type": "calc",
+          "difficulty": 3,
+          "status": "etudié",
+          "source": "TD2 Ex6",
+          "priority": "H",
+          "golden": {
+            "144p": {
+              "pixels": "256x144",
+              "bitrate_Mbps": 31.6,
+              "taille_min_MiB": 237
+            },
+            "240p": {
+              "pixels": "426x240",
+              "bitrate_Mbps": 98.3,
+              "taille_min_MiB": 316.35
+            },
+            "360p": {
+              "pixels": "640x360",
+              "bitrate_Mbps": 196.6,
+              "taille_min_MiB": 94.92
+            },
+            "480p": {
+              "pixels": "854x480",
+              "bitrate_Mbps": 392.6,
+              "taille_min_GiB": 1.64
+            },
+            "720p": {
+              "pixels": "1280x720",
+              "bitrate_Mbps": 530.8,
+              "taille_min_GiB": 2.98
+            },
+            "1080p": {
+              "pixels": "1920x1080",
+              "bitrate_Mbps": 1493.0,
+              "taille_min_GiB": 8.34
+            },
+            "convention": "binary"
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 7,
+          "topic": "QCM: Inconvénient maximiser B-frames",
+          "formulas": [],
+          "type": "qcm",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD2 Ex7",
+          "priority": "H",
+          "golden": {
+            "answer": "B",
+            "explanation": "Problème FF/FR (seek) + latence décodage"
+          },
+          "solution_status": "suggested-answer",
+          "confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "TD3",
+      "title": "Streaming & Transport",
+      "exercises": [
+        {
+          "num": 1,
+          "topic": "Couche PTS/DTS, protocoles VOD vs temps réel",
+          "formulas": [],
+          "type": "concept",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD3 Ex1",
+          "priority": "H",
+          "notes": "Source has only parts a) and d). Parts b) and c) missing from sheet — needs-teacher-check",
+          "golden": {
+            "couche": "PES",
+            "VOD": "TCP",
+            "temps_reel": "UDP/RTP"
+          },
+          "solution_status": "suggested-answer",
+          "confidence": "medium",
+          "needs_teacher_verification": true,
+          "verification_note": "Source only has parts a) and d). Parts b) and c) missing from sheet."
+        },
+        {
+          "num": 2,
+          "topic": "Ordre décodage/affichage PTS/DTS",
+          "formulas": [],
+          "type": "concept",
+          "difficulty": 3,
+          "status": "etudié",
+          "source": "TD3 Ex2",
+          "priority": "H",
+          "notes": "B frame DTS=80 > PTS=0 is physically impossible (real streams: PTS≥DTS). Teach expected answer + add 'Piège: PTS≥DTS réel'",
+          "golden": {
+            "decode_order": [
+              "I(DTS=0)",
+              "P(DTS=40)",
+              "B(DTS=80)"
+            ],
+            "display_order": [
+              "B(PTS=0)",
+              "P(PTS=40)",
+              "I(PTS=80)"
+            ],
+            "audio_sync": {
+              "audio_PTS_0": "video_B",
+              "audio_PTS_40": "video_P",
+              "audio_PTS_80": "video_I"
+            },
+            "lip_sync": "Synchronisation audio/vidéo (tolérance ~40-80ms)"
+          },
+          "solution_status": "suggested-answer",
+          "confidence": "medium",
+          "needs_teacher_verification": true,
+          "verification_note": "B-frame DTS=80 > PTS=0 physically impossible. Teach expected answer + add 'Piège: PTS≥DTS réel'."
+        },
+        {
+          "num": 3,
+          "topic": "Topologies Broadcast/Multicast/Unicast (3 cas)",
+          "formulas": [],
+          "type": "design",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD3 Ex3",
+          "priority": "H",
+          "notes": "Site says 300 students for Cas2, source says 500 — corrected to 500",
+          "golden": {
+            "cas1": {
+              "scenario": "5000 étudiants amphi TNT",
+              "topology": "Broadcast",
+              "justification": "Diffusion massive, pas de retour"
+            },
+            "cas2": {
+              "scenario": "500 étudiants fibre IPTV Algérie",
+              "topology": "Multicast",
+              "justification": "Un flux par groupe, économie bande"
+            },
+            "cas3": {
+              "scenario": "50000 étudiants 4G mobile",
+              "topology": "Unicast",
+              "justification": "ABR/CDN, personnalisable"
+            }
+          },
+          "solution_status": "suggested-answer",
+          "confidence": "medium"
+        },
+        {
+          "num": 4,
+          "topic": "Netflix vs Meet design + latence",
+          "formulas": [
+            "Latence = capture + encodage + réseau + jitter + décodage"
+          ],
+          "type": "design",
+          "difficulty": 3,
+          "status": "etudié",
+          "source": "TD3 Ex4",
+          "priority": "H",
+          "golden": {
+            "Netflix": {
+              "transport": "TCP",
+              "buffer": "20s",
+              "encapsulation": "fMP4/HLS/DASH",
+              "perte": "Retransmission"
+            },
+            "Meet": {
+              "transport": "UDP",
+              "buffer": "150ms",
+              "encapsulation": "RTP/SRTP",
+              "perte": "FEC/PLC",
+              "latence_ms": 170
+            }
+          },
+          "solution_status": "suggested-answer",
+          "confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "TD4",
+      "title": "Vidéo & Streaming",
+      "exercises": [
+        {
+          "num": 1,
+          "topic": "Débit Full HD brut + H.264 100:1 + ADSL 8M",
+          "formulas": [
+            "D = L×H×bpp×fps",
+            "D_compressed = D / ratio"
+          ],
+          "type": "calc",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD4 Ex1",
+          "priority": "H",
+          "golden": {
+            "debit_brut_Mbps": 1492.99,
+            "debit_H264_Mbps": 14.93,
+            "ADSL_8M_possible": false
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 2,
+          "topic": "Buffer drain: 5Mbps sur 4Mbps, buffer 10s",
+          "formulas": [
+            "Buffer = Dv × t_init",
+            "Deficit = Dv - Dr",
+            "t_freeze = Buffer / Deficit"
+          ],
+          "type": "calc",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD4 Ex2",
+          "priority": "H",
+          "golden": {
+            "buffer_Mbit": 50,
+            "deficit_Mbps": 1,
+            "t_freeze_s": 50
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 3,
+          "topic": "Timestamps RTP audio 48kHz / vidéo 90kHz",
+          "formulas": [
+            "t_audio_frame = 1024/48000",
+            "t_video_frame = 1/25"
+          ],
+          "type": "calc",
+          "difficulty": 3,
+          "status": "etudié",
+          "source": "TD4 Ex3",
+          "priority": "H",
+          "notes": "Audio ts 48000 @48kHz = 1.000s, Video ts 90000 @90kHz = 1.000s → aligned",
+          "golden": {
+            "audio_frame_ms": 21.33,
+            "video_frame_ms": 40,
+            "aligned_at_s": 1.0,
+            "desync_80ms_perceptible": true,
+            "lip_sync_limit_ms": 80
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 4,
+          "topic": "Jitter buffer: gigue 100ms, 25fps",
+          "formulas": [
+            "Buffer ≈ gigue + 1 frame"
+          ],
+          "type": "calc",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD4 Ex4",
+          "priority": "H",
+          "golden": {
+            "buffer_ms": 140
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 5,
+          "topic": "Encapsulation ES→PES→MP4/TS",
+          "formulas": [],
+          "type": "concept",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD4 Ex5",
+          "priority": "H",
+          "golden": {
+            "why_not_ES": "Pas de timing, sync A/V, résilience",
+            "PES_adds": "PTS/DTS",
+            "container_adds": "Multiplexage, accès aléatoire, correction erreurs"
+          },
+          "solution_status": "suggested-answer",
+          "confidence": "medium"
+        },
+        {
+          "num": 6,
+          "topic": "Taille film 1h 1080p24: brut + YouTube 4.5M+128k",
+          "formulas": [
+            "Brut = L×H×3×fps×3600",
+            "Compressed = (BR_vid + BR_aud) × 3600 / 8"
+          ],
+          "type": "calc",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD4 Ex6",
+          "priority": "H",
+          "golden": {
+            "brut_GB": 537.5,
+            "compressed_GB": 2.08,
+            "convention": "decimal"
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        }
+      ]
+    },
+    {
+      "id": "TD5",
+      "title": "VoIP, RTP, SFU, DASH, Design",
+      "exercises": [
+        {
+          "num": 1,
+          "topic": "Latence VoIP G.711: 20+20+80+40+20 = 180ms",
+          "formulas": [
+            "Latence = somme composants",
+            "G.114: <150 optimal, <400 acceptable"
+          ],
+          "type": "calc",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD5 Ex1",
+          "priority": "H",
+          "golden": {
+            "latence_ms": 180,
+            "qualification": "acceptable (pas optimal)"
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 2,
+          "topic": "Gigue RTP: délais 20,35,22,60,25,80ms",
+          "formulas": [
+            "max-min",
+            "MAD",
+            "mean|Δ|",
+            "RFC3550 smoothed"
+          ],
+          "type": "calc",
+          "difficulty": 3,
+          "status": "etudié",
+          "source": "TD5 Ex2",
+          "priority": "H",
+          "notes": "Multiple definitions: max-min=60ms, MAD≈19.8ms, mean|Δ|=31.2ms, RFC3550≈8.97ms. Show all, mark expected.",
+          "golden": {
+            "jitter_max_min_ms": 60,
+            "packets_lost_at_50ms_buffer": 2,
+            "lost_values": [
+              60,
+              80
+            ]
+          },
+          "solution_status": "suggested-answer",
+          "confidence": "medium",
+          "needs_teacher_verification": true,
+          "verification_note": "Multiple jitter definitions exist. Mark max-min=60ms as 'attendu', flag others."
+        },
+        {
+          "num": 3,
+          "topic": "SFU 12 participants: 2.5Mbps+64kbps each",
+          "formulas": [
+            "Up = video + audio",
+            "Down = (N-1) × Up",
+            "SFU_in = N × Up",
+            "SFU_out = N × Down"
+          ],
+          "type": "calc",
+          "difficulty": 3,
+          "status": "etudié",
+          "source": "TD5 Ex3",
+          "priority": "H",
+          "golden": {
+            "up_Mbps": 2.564,
+            "down_Mbps": 28.204,
+            "SFU_in_Mbps": 30.768,
+            "SFU_out_Mbps": 338.448,
+            "MCU_comparison": "MCU: transcode en 1 flux/client → moins bande client mais CPU serveur élevé"
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 4,
+          "topic": "ABR DASH: 5→1→0.3→4 Mbps, 3 rendus",
+          "formulas": [],
+          "type": "design",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD5 Ex4",
+          "priority": "H",
+          "golden": {
+            "actions": [
+              "5Mbps→1080p",
+              "1Mbps→720p",
+              "0.3Mbps→360p",
+              "4Mbps→1080p"
+            ],
+            "if_stay_1080p_at_03": "Buffering, freezes, rebuffering"
+          },
+          "solution_status": "suggested-answer",
+          "confidence": "medium"
+        },
+        {
+          "num": 5,
+          "topic": "Perte I dans MPEG GOP 12 (IBBPBBPBBPBB)",
+          "formulas": [],
+          "type": "concept",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD5 Ex5",
+          "priority": "H",
+          "golden": {
+            "perte_B": "Gêne mineure 1 image",
+            "perte_P": "Corruption jusqu'au prochain I",
+            "perte_I": "Tout GOP corrompu",
+            "why_I_regular": "Récupération, accès aléatoire, changement chaîne, résilience erreurs"
+          },
+          "solution_status": "suggested-answer",
+          "confidence": "medium"
+        },
+        {
+          "num": 6,
+          "topic": "Désync A/V: H.264 120ms vs Opus 20ms = 100ms",
+          "formulas": [
+            "Décalage = encodage_vid - encodage_aud"
+          ],
+          "type": "calc",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD5 Ex6",
+          "priority": "H",
+          "golden": {
+            "decalage_ms": 100,
+            "RTCP_SR_NTP": "Timestamps NTP alignent horloges RTP côté récepteur"
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 7,
+          "topic": "Multi-site visio: 40, 100, 180ms",
+          "formulas": [],
+          "type": "design",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD5 Ex7",
+          "priority": "H",
+          "golden": {
+            "solution": "Bufferiser à latence max (180ms) ou MCU horloge commune"
+          },
+          "solution_status": "suggested-answer",
+          "confidence": "medium"
+        },
+        {
+          "num": 8,
+          "topic": "Télémédecine Oran: 20×2.564=51.28Mbps sur 100M",
+          "formulas": [
+            "Bande = N × (video + audio)"
+          ],
+          "type": "design",
+          "difficulty": 3,
+          "status": "etudié",
+          "source": "TD5 Ex8",
+          "priority": "H",
+          "golden": {
+            "codecs": "H.264/HEVC + Opus + JPEG",
+            "protocoles": "WebRTC/SRTP (visio), HTTPS (DICOM)",
+            "QoS": "Priorité médicale",
+            "chiffrement": "TLS/SRTP",
+            "bande_Mbps": 51.28,
+            "architecture": "SFU/MCU avec liens redondants"
+          },
+          "solution_status": "suggested-answer",
+          "confidence": "medium"
+        }
+      ]
+    },
+    {
+      "id": "TD6",
+      "title": "Télécom, PCM, E1, MCU/SFU, DVI",
+      "exercises": [
+        {
+          "num": 1,
+          "topic": "PCM G.711 64kbps: voix 4kHz → Fe=8kHz, 8bits",
+          "formulas": [
+            "Fe = 2×fmax = 8kHz",
+            "Débit = Fe × bits = 64kbps"
+          ],
+          "type": "calc",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD6 Ex1",
+          "priority": "H",
+          "golden": {
+            "debit_kbps": 64
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 2,
+          "topic": "Dimensionnement E1: 2000 abonnés, 10%, E1=30 canaux",
+          "formulas": [
+            "Appels = abonnés × taux",
+            "E1 = ceil(appels/30)",
+            "Transits = ceil(E1/20)"
+          ],
+          "type": "calc",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD6 Ex2",
+          "priority": "H",
+          "golden": {
+            "appels": 200,
+            "E1": 7,
+            "transits": 1
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 3,
+          "topic": "Codecs voix: 50 appels G.711 87.2k vs Opus 40k (overhead)",
+          "formulas": [
+            "Bande = N × BR_overhead"
+          ],
+          "type": "calc",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD6 Ex3",
+          "priority": "H",
+          "golden": {
+            "G711_Mbps": 4.36,
+            "Opus_Mbps": 2.0,
+            "choix_interne": "G.711",
+            "choix_externe": "Opus"
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 4,
+          "topic": "MCU vs SFU 6 participants",
+          "formulas": [
+            "SFU: N up + N×(N-1) down",
+            "MCU: N up + N down (mais CPU)"
+          ],
+          "type": "calc",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD6 Ex4",
+          "priority": "H",
+          "golden": {
+            "SFU": {
+              "up": 6,
+              "down": 30,
+              "server_relay": "6 up + 30 down"
+            },
+            "MCU": {
+              "up": 6,
+              "down": 6,
+              "server_mix": "CPU élevé"
+            },
+            "when_MCU": "Clients bande limitée ou codecs hétérogènes"
+          },
+          "solution_status": "independently-derived",
+          "confidence": "high"
+        },
+        {
+          "num": 5,
+          "topic": "DVI-D/A/I, Single/Dual Link, max Single",
+          "formulas": [],
+          "type": "concept",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD6 Ex5",
+          "priority": "H",
+          "golden": {
+            "DVI-D": "Numérique seul",
+            "DVI-A": "Analogique seul",
+            "DVI-I": "Les deux (numérique + analogique)",
+            "Single_max": "1920×1200@60Hz",
+            "Dual_max": "2560×1600@60Hz"
+          },
+          "solution_status": "suggested-answer",
+          "confidence": "medium"
+        },
+        {
+          "num": 6,
+          "topic": "DVI-D → VGA adaptateur passif impossible",
+          "formulas": [],
+          "type": "concept",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD6 Ex6",
+          "priority": "H",
+          "golden": {
+            "possible": false,
+            "reason": "DVI-D pas de signal analogique",
+            "solution": "DVI-I ou convertisseur actif"
+          },
+          "solution_status": "suggested-answer",
+          "confidence": "medium"
+        },
+        {
+          "num": 7,
+          "topic": "1080i60 vs 1080p30: interlacé avantage 2000",
+          "formulas": [],
+          "type": "concept",
+          "difficulty": 2,
+          "status": "etudié",
+          "source": "TD6 Ex7",
+          "priority": "H",
+          "golden": {
+            "avantage_2000": "Économisait bande passante même fluidité perçue (50/60 champs/s)",
+            "pourquoi_progressif": "Meilleure qualité, pas artefacts peigne, écrans progressifs, compression favorise progressif"
+          },
+          "solution_status": "suggested-answer",
+          "confidence": "medium"
+        }
+      ]
+    }
+  ],
+  "course_chapters": {
+    "Ch1_Representation": {
+      "topics": [
+        {
+          "topic": "Psychoacoustique (Fletcher-Munson, masquage freq/temp, ITD/ILD/HRTF)",
+          "status": "hors-cours"
+        },
+        {
+          "topic": "Modèles couleur (RGB, CMJN, YUV/YCbCr, HSV)",
+          "status": "hors-cours"
+        },
+        {
+          "topic": "YCbCr BT.601 formulas",
+          "status": "hors-cours",
+          "note": "Used implicitly in TD2"
+        },
+        {
+          "topic": "Estimation mouvement (macroblocs 16×16, SAD, vecteurs)",
+          "status": "hors-cours"
+        },
+        {
+          "topic": "Décompression vidéo (CABAC, IDCT, deblocking, sync)",
+          "status": "hors-cours"
+        },
+        {
+          "topic": "PSNR/SSIM qualité",
+          "status": "hors-cours"
+        },
+        {
+          "topic": "Haptique (IEEE 1918.1.1, 1000Hz, passivité, JND 7-10%)",
+          "status": "hors-cours"
+        }
+      ]
+    },
+    "Ch2_Transmission": {
+      "topics": [
+        {
+          "topic": "Classification protocoles (temps réel, HTTP-based, signalisation, transport)",
+          "status": "hors-cours"
+        },
+        {
+          "topic": "RTSP, SIP, HLS vs DASH, WebRTC, SRT, RTMP, HTTP/2, QUIC",
+          "status": "hors-cours"
+        },
+        {
+          "topic": "IntServ/DiffServ, MOS/PSNR/SSIM métriques",
+          "status": "hors-cours"
+        },
+        {
+          "topic": "SVC (Scalable Video Coding)",
+          "status": "hors-cours"
+        }
+      ]
+    }
+  },
+  "unit_conventions": {
+    "TD1_Ex1": "decimal",
+    "TD1_Ex16": "binary",
+    "TD1_Ex12": "decimal",
+    "TD2_Ex6": "binary",
+    "TD4_Ex6": "decimal",
+    "rule": "Global toggle Décimal/Binaire. Tag each exercise with independently derived convention. Display both where they differ."
+  },
+  "content_defects": [
+    {
+      "id": "a",
+      "defect": "TD2 missing Ex6 (table) & Ex7 (QCM B-frames)",
+      "resolution": "Add both, Ex7 answer = B",
+      "reference": "independently derived solution"
+    },
+    {
+      "id": "b",
+      "defect": "TD3 Ex3 Cas2: 300 vs 500 students",
+      "resolution": "Correct to 500",
+      "reference": "independently derived solution"
+    },
+    {
+      "id": "c",
+      "defect": "TD3 Ex1 missing parts b) & c)",
+      "resolution": "Flag needs-teacher-check",
+      "reference": "independently derived solution"
+    },
+    {
+      "id": "d",
+      "defect": "Unit convention inconsistency",
+      "resolution": "Implement global toggle + per-exercise tagging",
+      "reference": "independently derived solution"
+    },
+    {
+      "id": "e",
+      "defect": "TD3 Ex2: B frame DTS=80 > PTS=0 impossible",
+      "resolution": "Teach expected answer + add 'Piège: PTS≥DTS réel'",
+      "reference": "independently derived solution"
+    },
+    {
+      "id": "f",
+      "defect": "TD4 Ex3: timestamps aligned at 1s",
+      "resolution": "Include frame durations (21.33ms, 40ms)",
+      "reference": "independently derived solution"
+    },
+    {
+      "id": "g",
+      "defect": "TD5 Ex2: multiple jitter definitions",
+      "resolution": "Show all, mark expected, flag",
+      "reference": "independently derived solution"
+    },
+    {
+      "id": "h",
+      "defect": "TD5 Ex3: SFU totals unquantified",
+      "resolution": "Complete: up 2.564, down 28.204, SFU in 30.768, out 338.448 Mbps",
+      "reference": "independently derived solution"
+    },
+    {
+      "id": "i",
+      "defect": "TD1 Ex10: 5.8 bits non-integer",
+      "resolution": "Present inconsistency + derived duration 18750s",
+      "reference": "independently derived solution"
+    },
+    {
+      "id": "j",
+      "defect": "TD1 Ex3: v(t) digitisation from spline points",
+      "resolution": "Implement interactive digitiser with reconstructed curve",
+      "reference": "independently derived solution"
+    },
+    {
+      "id": "k",
+      "defect": "Quiz counts: header 20 vs section 30",
+      "resolution": "Rebuild banks properly",
+      "reference": "independently derived solution"
+    },
+    {
+      "id": "l",
+      "defect": "Barème +1/-0.5/0 configurable",
+      "resolution": "Keep as default, make configurable",
+      "reference": "independently derived solution"
+    }
+  ],
+  "generator_families": 25,
+  "flashcard_target": 120,
+  "quiz_targets": {
+    "QCM": 150,
+    "conceptuel": 40,
+    "design": 4,
+    "calc_families": 25
+  },
+  "statistics": {
+    "total_td_exercises": 48,
+    "by_type": {
+      "calc": 38,
+      "concept": 5,
+      "design": 4,
+      "qcm": 2,
+      "lab": 3
+    },
+    "exam_priority_etudié": 48,
+    "hors_cours_topics": 15
+  },
+  "source_note": "NO official corrections exist in source materials. All solutions independently derived from course theory.",
+  "solution_policy": "Every solution carries status: independently-derived | suggested-answer | needs-teacher-verification | reference-implementation. Golden tests verify internal consistency only.",
+  "golden_tests_note": "Golden tests verify INTERNAL MATHEMATICAL CONSISTENCY ONLY. They do NOT prove the answer matches a teacher's correction (no official corrections exist)."
+}
