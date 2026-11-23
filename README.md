@@ -65,7 +65,6 @@ Turn dense multimedia theory into bite-size practice: flashcards, quizzes, TD ex
 
 > لِـ **Chekalil Aimene Charef Eddine**
 >
-> الدعاء: «اللهم صلِّ على نبينا محمد ﷺ»
 
 ## 🙏 Thank you
 
