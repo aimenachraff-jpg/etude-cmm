@@ -8,7 +8,7 @@ please mention me on ur prayers "chekalil aimene charef eddine"
 
 </div>
 
-# 🕌 Étude CMM — Communication Multimédia Master 2 IAA
+#  Étude CMM — Communication Multimédia Master 2 IAA
 
 **Interactive learning platform for the Communication Multimedia (CMM) — Master 2 IAA curriculum.**
 
@@ -61,10 +61,6 @@ Turn dense multimedia theory into bite-size practice: flashcards, quizzes, TD ex
 - Production deploy: `npx vercel deploy --prod --yes --scope ednodh --project cmm`
 - Preview deployments are used for all current work; production is only deployed on explicit approval.
 
-## 🤲 الدعاء
-
-> لِـ **Chekalil Aimene Charef Eddine**
->
 
 ## 🙏 Thank you
 

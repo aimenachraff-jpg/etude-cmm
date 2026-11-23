@@ -1,0 +1,362 @@
+[
+  {
+    "category": "Audio",
+    "question": "Fe minimale pour un signal de 3400 Hz max?",
+    "options": [
+      "3400 Hz",
+      "6800 Hz",
+      "8000 Hz",
+      "44100 Hz"
+    ],
+    "correct": 1,
+    "explanation": "Nyquist: Fe≥2×fmax=6800 Hz."
+  },
+  {
+    "category": "Audio",
+    "question": "Débit CD stéréo 44.1kHz 16bits en kbit/s?",
+    "options": [
+      "705.6",
+      "1411.2",
+      "2822.4",
+      "320"
+    ],
+    "correct": 1,
+    "explanation": "44100×16×2=1 411 200 bit/s."
+  },
+  {
+    "category": "Audio",
+    "question": "SNR pour 16 bits ≈?",
+    "options": [
+      "49.41 dB",
+      "97.57 dB",
+      "145.73 dB",
+      "6.02 dB"
+    ],
+    "correct": 1,
+    "explanation": "6.02×16+1.25=97.57 dB."
+  },
+  {
+    "category": "Audio",
+    "question": "Taille 1 min CD audio en Mo?",
+    "options": [
+      "5.29",
+      "10.58",
+      "0.95",
+      "1.41"
+    ],
+    "correct": 1,
+    "explanation": "1 411 200×60/8=10 584 000 octets."
+  },
+  {
+    "category": "Audio",
+    "question": "Nyquist: Fe_min = ?",
+    "options": [
+      "fmax",
+      "2×fmax",
+      "fmax/2",
+      "4×fmax"
+    ],
+    "correct": 1,
+    "explanation": "Shannon-Nyquist."
+  },
+  {
+    "category": "Audio",
+    "question": "FLAC réduction typique?",
+    "options": [
+      "~91%",
+      "~50%",
+      "~10%",
+      "~99%"
+    ],
+    "correct": 1,
+    "explanation": "~50% sans perte."
+  },
+  {
+    "category": "Audio",
+    "question": "VBR vs CBR?",
+    "options": [
+      "VBR débit constant",
+      "CBR débit variable",
+      "VBR économise bande passante",
+      "CBR sans perte"
+    ],
+    "correct": 2,
+    "explanation": "VBR variable."
+  },
+  {
+    "category": "Audio",
+    "question": "MP3 utilise combien de sous-bandes?",
+    "options": [
+      "8",
+      "16",
+      "32",
+      "64"
+    ],
+    "correct": 2,
+    "explanation": "32 sous-bandes."
+  },
+  {
+    "category": "Audio",
+    "question": "Opus latence?",
+    "options": [
+      "5 ms",
+      "50 ms",
+      "150 ms",
+      "500 ms"
+    ],
+    "correct": 0,
+    "explanation": "Opus: latence 5 ms."
+  },
+  {
+    "category": "Audio",
+    "question": "G.711 débit?",
+    "options": [
+      "32 kbit/s",
+      "64 kbit/s",
+      "128 kbit/s",
+      "256 kbit/s"
+    ],
+    "correct": 1,
+    "explanation": "8 kHz × 8 bits = 64 kbit/s."
+  },
+  {
+    "category": "Image",
+    "question": "Image I dans MPEG signifie?",
+    "options": [
+      "Predicted",
+      "Bidirectionnelle",
+      "Intra (complète)",
+      "Interpolée"
+    ],
+    "correct": 2,
+    "explanation": "I = image complète de référence."
+  },
+  {
+    "category": "Image",
+    "question": "GOP IBBPBBIBBP a taille?",
+    "options": [
+      "8",
+      "10",
+      "12",
+      "6"
+    ],
+    "correct": 1,
+    "explanation": "10 caractères."
+  },
+  {
+    "category": "Image",
+    "question": "JPEG chaîne: première étape?",
+    "options": [
+      "DCT",
+      "Quantification",
+      "RGB→YCbCr",
+      "Huffman"
+    ],
+    "correct": 2,
+    "explanation": "RGB→YCbCr d'abord."
+  },
+  {
+    "category": "Image",
+    "question": "Sous-échantillonnage 4:2:0 réduction?",
+    "options": [
+      "-25%",
+      "-50%",
+      "-75%",
+      "-90%"
+    ],
+    "correct": 1,
+    "explanation": "−50% (Y plein, Cb/Cr ÷4)."
+  },
+  {
+    "category": "Image",
+    "question": "DCT produit?",
+    "options": [
+      "pixels",
+      "1 DC + 63 AC",
+      "vecteurs",
+      "coefficients RGB"
+    ],
+    "correct": 1,
+    "explanation": "1 DC (moyenne) + 63 AC (détails)."
+  },
+  {
+    "category": "Image",
+    "question": "Huffman code?",
+    "options": [
+      "Longueur fixe",
+      "Longueur variable, fréquents→courts",
+      "Sans perte uniquement",
+      "Avec perte"
+    ],
+    "correct": 1,
+    "explanation": "Code à longueur variable."
+  },
+  {
+    "category": "Vidéo",
+    "question": "Débit Full HD 1080p 30fps 24bits en Mbit/s?",
+    "options": [
+      "149.3",
+      "1492.99",
+      "298.6",
+      "746.5"
+    ],
+    "correct": 1,
+    "explanation": "1920×1080×24×30=1.49 Gbit/s."
+  },
+  {
+    "category": "Vidéo",
+    "question": "H.264 compression typique?",
+    "options": [
+      "10:1",
+      "50:1",
+      "100:1",
+      "1000:1"
+    ],
+    "correct": 2,
+    "explanation": "≈100:1."
+  },
+  {
+    "category": "Vidéo",
+    "question": "SAD sert à?",
+    "options": [
+      "Compresser",
+      "Estimer le mouvement",
+      "Quantifier",
+      "Encoder l'audio"
+    ],
+    "correct": 1,
+    "explanation": "Somme des différences absolues pour le meilleur match."
+  },
+  {
+    "category": "Vidéo",
+    "question": "B-frame nécessite?",
+    "options": [
+      "Rien",
+      "Un buffer (latence)",
+      "Plus de bande passante",
+      "Moins de qualité"
+    ],
+    "correct": 1,
+    "explanation": "Buffer car dépend du futur."
+  },
+  {
+    "category": "Réseau",
+    "question": "Protocole VOD?",
+    "options": [
+      "UDP",
+      "TCP",
+      "ICMP",
+      "RTP"
+    ],
+    "correct": 1,
+    "explanation": "TCP pour VOD."
+  },
+  {
+    "category": "Réseau",
+    "question": "Protocole temps réel interactif?",
+    "options": [
+      "TCP",
+      "HTTP",
+      "UDP",
+      "FTP"
+    ],
+    "correct": 2,
+    "explanation": "UDP (RTP)."
+  },
+  {
+    "category": "Réseau",
+    "question": "PTS sert à?",
+    "options": [
+      "Décodage",
+      "Affichage",
+      "Compression",
+      "Transport"
+    ],
+    "correct": 1,
+    "explanation": "Presentation Time Stamp."
+  },
+  {
+    "category": "Réseau",
+    "question": "DTS pour image B est?",
+    "options": [
+      "< PTS",
+      "= PTS",
+      "> PTS",
+      "0"
+    ],
+    "correct": 2,
+    "explanation": "DTS>PTS pour les B."
+  },
+  {
+    "category": "Réseau",
+    "question": "Topologie IPTV?",
+    "options": [
+      "Broadcast",
+      "Multicast",
+      "Unicast",
+      "Anycast"
+    ],
+    "correct": 1,
+    "explanation": "Multicast."
+  },
+  {
+    "category": "Réseau",
+    "question": "Latence Meet typique?",
+    "options": [
+      "20 ms",
+      "170 ms",
+      "20 s",
+      "5 s"
+    ],
+    "correct": 1,
+    "explanation": "20+30+40+60+20=170 ms."
+  },
+  {
+    "category": "Réseau",
+    "question": "DASH sert à?",
+    "options": [
+      "Chiffrer",
+      "Adapter le débit",
+      "Compresser",
+      "Multiplexer"
+    ],
+    "correct": 1,
+    "explanation": "ABR."
+  },
+  {
+    "category": "Réseau",
+    "question": "Gigue (jitter) = ?",
+    "options": [
+      "Perte de paquets",
+      "Variation de délai",
+      "Débit",
+      "Latence fixe"
+    ],
+    "correct": 1,
+    "explanation": "Variation de délai."
+  },
+  {
+    "category": "Réseau",
+    "question": "1 Mo binaire = ?",
+    "options": [
+      "1000 octets",
+      "1024 octets",
+      "1024² octets",
+      "1000² octets"
+    ],
+    "correct": 2,
+    "explanation": "1024² octets."
+  },
+  {
+    "category": "Haptique",
+    "question": "Fréquence boucle haptique?",
+    "options": [
+      "24 Hz",
+      "60 Hz",
+      "1000 Hz",
+      "44100 Hz"
+    ],
+    "correct": 2,
+    "explanation": "1000 Hz minimum."
+  }
+]

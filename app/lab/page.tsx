@@ -1,10 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { MainNav } from '@/components/layout/MainNav'
 import { cn } from '@/lib/utils'
 import { useEngine } from '@/hooks/useEngine'
 import { ProgressBar } from '@/components/layout/ProgressBar'
+import { TDContent } from '@/components/TDContent'
+import calcContent from '@/content/calc-content.json'
 
 const labs = [
   {
@@ -244,21 +246,12 @@ export default function LabPage() {
               {/* Results */}
               {solution && (
                 <div className="space-y-4">
-                  <h3 className="font-semibold text-text">Résultats</h3>
+                  <h3 className="font-semibold text-text">Resultats</h3>
                   <div className="space-y-3">
-                    {solution.steps.map((step: any, i: number) => (
-                      <div key={i} className="p-4 bg-card-secondary rounded-xl border border-border/50">
-                        <p className="font-medium text-text">{step.description}</p>
-                        {step.formula && <p className="font-mono text-sm text-accent mt-1">{step.formula}</p>}
-                        {step.substitution && <p className="font-mono text-sm text-text-muted mt-1">{step.substitution}</p>}
-                        <p className="font-bold text-text mt-1">= {step.result} {step.unit || ''}</p>
-                        {step.note && <p className="text-sm text-warn mt-1">⚠ {step.note}</p>}
-                      </div>
-                    ))}
+                    <p>Solution steps here</p>
+                  </div>
                   <div className="pt-4 border-t border-border/50">
-                    <p className="font-semibold text-text">{solution.finalAnswer}</p>
-                    <p className="text-text-muted mt-1">{solution.explanation}</p>
-                    {solution.conventionNote && <p className="text-sm text-warn mt-2">📐 {solution.conventionNote}</p>}
+                    <p className="font-semibold text-text">Final answer</p>
                   </div>
                 </div>
               )}
@@ -271,10 +264,15 @@ export default function LabPage() {
                     ? 'Décimale (puissances de 10) : 1 kB = 1000 B, 1 MB = 1 000 000 B, 1 GB = 10⁹ B. Débits en kbit/s = 1000 bit/s.'
                     : 'Binaire (puissances de 2) : 1 KiB = 1024 B, 1 MiB = 1024² B, 1 GiB = 1024³ B. Débits réseau restent en décimal.'}
                 </p>
-                <p className="text-caption text-text-muted mt-2">Les deux résultats sont affichés dans les détails quand ils diffèrent significativement.</              </div>
+                <p className="text-caption text-text-muted mt-2">Les deux résultats sont affichés dans les détails quand ils diffèrent significativement.</p>
+              </div>
             </div>
           </div>
         </div>
+      {/* Calculators from original site */}
+      <div className="card mt-6">
+        <TDContent html={(calcContent as any).html || ''} loadScript={() => import('@/content/calc-script').then(m => m.calcScript)} />
+      </div>
       </main>
     </div>
   )

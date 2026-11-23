@@ -86,7 +86,7 @@ export default function DashboardPage() {
               <div className="hidden sm:flex flex-col items-end">
                 <span className="text-caption text-text-muted">Prochain examen</span>
                 <span className="font-mono text-lg font-bold text-accent">{countdown}</span>
-              </span>
+              </div>
               <Link href="/settings" className="btn btn-ghost">⚙️ Réglages</Link>
             </div>
           </div>
@@ -213,8 +213,9 @@ export default function DashboardPage() {
                     <th>Sujet</th>
                     <th>Score</th>
                     <th>Durée</th>
-                  </thead>
-                  <tbody>
+                  </tr>
+                </thead>
+                <tbody>
                     {examHistory.slice(0, 5).length > 0 ? (
                       examHistory.slice(0, 5).map((exam, i) => (
                         <tr key={i}>
@@ -234,7 +235,6 @@ export default function DashboardPage() {
                 </table>
               </div>
             </div>
-          </div>
         </section>
       </main>
     </div>
