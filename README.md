@@ -1,12 +1,12 @@
+> 🤲 **الدعاء** — لِـ **Chekalil Aimene Charef Eddine**
+>
+> الدعاء: «اللهم صلِّ على نبينا محمد ﷺ»
+
 <div align="center">
 
 <img src="docs/screenshot.png" alt="Étude CMM — Communication Multimédia Master 2 IAA" width="800" />
 
 </div>
-
-> 🤲 **الدعاء** — لِـ **Chekalil Aimene Charef Eddine**
->
-> الدعاء: «اللهم صلِّ على نبينا محمد ﷺ»
 
 # 🕌 Étude CMM — Communication Multimédia Master 2 IAA
 
