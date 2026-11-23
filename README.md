@@ -1,6 +1,6 @@
 > 🤲 **الدعاء** — لِـ **Chekalil Aimene Charef Eddine**
 >
-> الدعاء: «اللهم صلِّ على نبينا محمد ﷺ»
+please mention me on ur prayers "chekalil aimene charef eddine"
 
 <div align="center">
 
