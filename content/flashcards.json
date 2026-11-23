@@ -1,0 +1,296 @@
+[
+  {
+    "front": "Quelle est la formule du débit audio?",
+    "back": "D = Fe × B × canaux (bit/s). Ex: CD = 44100×16×2 = 1.41 Mbit/s.",
+    "tags": [],
+    "category": "formula"
+  },
+  {
+    "front": "Quelle est la formule de la taille d'un fichier audio?",
+    "back": "S = D × durée / 8 (octets). Ex: 1 min CD = 10.58 Mo.",
+    "tags": [],
+    "category": "formula"
+  },
+  {
+    "front": "Quel est le SNR pour B bits?",
+    "back": "SNR ≈ 6.02×B + 1.25 dB. 16 bits → 97.57 dB.",
+    "tags": [],
+    "category": "formula"
+  },
+  {
+    "front": "Quelle est la condition de Nyquist?",
+    "back": "Fe ≥ 2 × fmax. Voix (4 kHz) → 8 kHz. CD (20 kHz) → 44.1 kHz.",
+    "tags": [],
+    "category": "formula"
+  },
+  {
+    "front": "Combien de niveaux pour B bits?",
+    "back": "2^B niveaux. 8 bits = 256, 16 bits = 65 536.",
+    "tags": [],
+    "category": "formula"
+  },
+  {
+    "front": "Qu'est-ce que le masquage fréquentiel?",
+    "back": "Un son fort masque un son faible proche en fréquence. Base du MP3.",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Quelle est la différence CBR/VBR?",
+    "back": "CBR = débit constant. VBR = débit variable, économise ~30%.",
+    "tags": [],
+    "category": "comparison"
+  },
+  {
+    "front": "Qu'est-ce qu'une image I en MPEG?",
+    "back": "Image complète de référence (intra). Permet le seek.",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Qu'est-ce qu'une image P?",
+    "back": "Prédite depuis l'image précédente (vecteurs de mouvement + résidu).",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Qu'est-ce qu'une image B?",
+    "back": "Bidirectionnelle (avant+après). La plus légère mais nécessite un buffer.",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Qu'est-ce qu'un GOP?",
+    "back": "Group of Pictures: séquence d'images entre deux I (ex: IBBPBBIBBP = 10).",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Que signifie PTS?",
+    "back": "Presentation Time Stamp = instant d'affichage.",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Que signifie DTS?",
+    "back": "Decoding Time Stamp = instant de décodage. Pour B: DTS > PTS.",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Quelle topologie pour l'IPTV?",
+    "back": "Multicast (un flux par groupe via IGMP).",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Quelle topologie pour Netflix?",
+    "back": "Unicast (un flux par client, ABR).",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Quelle topologie pour la TNT?",
+    "back": "Broadcast (un vers tous).",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Qu'est-ce que DASH?",
+    "back": "Dynamic Adaptive Streaming: adaptation du débit selon la bande passante.",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Qu'est-ce que la gigue (jitter)?",
+    "back": "Variation du délai de transmission. Compensée par un buffer de jitter.",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Quel est le débit d'un flux Full HD brut?",
+    "back": "1920×1080×24×30 = 1.49 Gbit/s.",
+    "tags": [],
+    "category": "formula"
+  },
+  {
+    "front": "Quel est le taux de compression H.264?",
+    "back": "≈ 100:1.",
+    "tags": [],
+    "category": "concept"
+  },
+  {
+    "front": "Quelle est la chaîne JPEG?",
+    "back": "RGB→YCbCr→sous-éch. 4:2:0→DCT 8×8→quantification→zigzag→RLE→Huffman.",
+    "tags": [],
+    "category": "concept"
+  },
+  {
+    "front": "Que produit la DCT?",
+    "back": "1 coefficient DC (moyenne) + 63 coefficients AC (détails).",
+    "tags": [],
+    "category": "concept"
+  },
+  {
+    "front": "À quoi sert le SAD?",
+    "back": "Somme des différences absolues: trouve le meilleur match pour l'estimation de mouvement.",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Qu'est-ce que le PSNR?",
+    "back": "Peak Signal-to-Noise Ratio. >40 dB excellent, 30-40 bon, <30 dégradé.",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Quelle est la fréquence de la boucle haptique?",
+    "back": "1000 Hz minimum (perception jusqu'à 500 Hz).",
+    "tags": [],
+    "category": "concept"
+  },
+  {
+    "front": "Qu'est-ce que la passivité en haptique?",
+    "back": "Le système ne génère pas d'énergie: Re(Z) ≥ 0.",
+    "tags": [],
+    "category": "concept"
+  },
+  {
+    "front": "Quelle est la formule de Shannon-Hartley?",
+    "back": "C = B × log₂(1 + SNR) (capacité max d'un canal).",
+    "tags": [],
+    "category": "formula"
+  },
+  {
+    "front": "Qu'est-ce que le MCU?",
+    "back": "Multipoint Control Unit: mixe les flux (CPU élevé, bande faible).",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Qu'est-ce que le SFU?",
+    "back": "Selective Forwarding Unit: relaie les flux (CPU faible, bande élevée).",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Quel est le débit du G.711?",
+    "back": "64 kbit/s (8 kHz, 8 bits).",
+    "tags": [],
+    "category": "formula"
+  },
+  {
+    "front": "Quels sont les débits de l'Opus?",
+    "back": "6 à 510 kbit/s, latence 5 ms (VoIP).",
+    "tags": [],
+    "category": "concept"
+  },
+  {
+    "front": "Pourquoi AAC > MP3?",
+    "back": "MDCT 1024 bandes: +30% d'efficacité. 128 kbit/s AAC ≈ 192 kbit/s MP3.",
+    "tags": [],
+    "category": "comparison"
+  },
+  {
+    "front": "Quelle est la taille d'un paquet MPEG-2 TS?",
+    "back": "188 octets (4 header + 184 charge utile).",
+    "tags": [],
+    "category": "formula"
+  },
+  {
+    "front": "Qu'est-ce que le RTP?",
+    "back": "Real-time Transport Protocol: N° séquence + timestamp sur UDP.",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Qu'est-ce que le RTCP?",
+    "back": "Feedback de qualité: perte, gigue, statistiques.",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Qu'est-ce que WebRTC?",
+    "back": "RTP + SRTP + RTCP + ICE (visio P2P).",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Qu'est-ce que le SVC?",
+    "back": "Scalable Video Coding: couches de base + amélioration (spatial/temporel/qualité).",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Qu'est-ce que le FEC?",
+    "back": "Forward Error Correction: correction d'erreurs sans retransmission.",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Qu'est-ce que le deadband haptique?",
+    "back": "Compression: on supprime les variations < JND (7-10%).",
+    "tags": [],
+    "category": "concept"
+  },
+  {
+    "front": "Quelle est la latence typique d'une visio?",
+    "back": "170 ms (capture 20 + encodage 30 + réseau 40 + jitter 60 + décodage 20).",
+    "tags": [],
+    "category": "formula"
+  },
+  {
+    "front": "Qu'est-ce que le RTSP?",
+    "back": "Protocole de contrôle (SETUP, PLAY, PAUSE, TEARDOWN). Ne transporte pas les données (utilise RTP).",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Qu'est-ce que le SIP?",
+    "back": "Signalisation VoIP: INVITE, REGISTER, BYE. Composants: UAC, UAS, Proxy, Registrar.",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Qu'est-ce que WebRTC?",
+    "back": "RTP + SRTP + RTCP + ICE + DTLS. Communication P2P dans le navigateur, <150 ms.",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "HLS vs DASH?",
+    "back": "HLS: .m3u8/.ts (Apple). DASH: .mpd/fMP4 (standard MPEG). Les deux font de l'ABR.",
+    "tags": [],
+    "category": "comparison"
+  },
+  {
+    "front": "Qu'est-ce que le SRT?",
+    "back": "Secure Reliable Transport: streaming faible latence sur réseaux non fiables (chiffré, ARQ).",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Qu'est-ce que le RTMP?",
+    "back": "Protocole Adobe pour l'ingestion (OBS→serveur). Faible latence. RTMPS = chiffré.",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Qu'est-ce que QUIC?",
+    "back": "Transport sur UDP: résout le HoL blocking, 0-RTT, chiffrement intégré. Base de HTTP/3.",
+    "tags": [],
+    "category": "definition"
+  },
+  {
+    "front": "Quels sont les types d'applications multimédia?",
+    "back": "Stocké (VoD, TCP), Live (streaming, 2-30s), Temps réel interactif (<150 ms, UDP).",
+    "tags": [],
+    "category": "comparison"
+  },
+  {
+    "front": "Qu'est-ce que le MOS?",
+    "back": "Mean Opinion Score: note de 1 à 5 donnée par des humains.",
+    "tags": [],
+    "category": "definition"
+  }
+]

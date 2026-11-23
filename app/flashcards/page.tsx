@@ -5,57 +5,9 @@ import { MainNav } from '@/components/layout/MainNav'
 import { cn } from '@/lib/utils'
 import { useStore } from '@/lib/store'
 import { CircularProgress } from '@/components/layout/ProgressBar'
+import flashcardsData from '@/content/flashcards.json'
 
-const flashcards = [
-  { front: "Formule débit audio", back: "D = Fe × B × canaux (bit/s). Ex: CD = 44100×16×2 = 1.41 Mbit/s.", tags: ['audio', 'formule'], category: 'formula' },
-  { front: "Formule taille fichier audio", back: "S = D × durée / 8 (octets). Ex: 1 min CD = 10.58 Mo.", tags: ['audio', 'formule'], category: 'formula' },
-  { front: "SNR pour B bits", back: "SNR ≈ 6.02×B + 1.25 dB. 16 bits → 97.57 dB.", tags: ['audio', 'formule'], category: 'formula' },
-  { front: "Condition de Nyquist", back: "Fe ≥ 2 × fmax. Voix (4 kHz) → 8 kHz. CD (20 kHz) → 44.1 kHz.", tags: ['audio', 'formule'], category: 'formula' },
-  { front: "Niveaux de quantification", back: "2^B niveaux. 8 bits = 256, 16 bits = 65 536.", tags: ['audio', 'formule'], category: 'formula' },
-  { front: "Masquage fréquentiel", back: "Un son fort masque un son faible proche en fréquence. Base du MP3.", tags: ['audio', 'concept'], category: 'definition' },
-  { front: "Différence CBR/VBR", back: "CBR = débit constant. VBR = débit variable, économise ~30%.", tags: ['audio', 'concept'], category: 'comparison' },
-  { front: "Image I en MPEG", back: "Image complète de référence (intra). Permet le seek.", tags: ['video', 'definition'], category: 'definition' },
-  { front: "Image P en MPEG", back: "Prédite depuis l'image précédente (vecteurs de mouvement + résidu).", tags: ['video', 'definition'], category: 'definition' },
-  { front: "Image B en MPEG", back: "Bidirectionnelle (avant+après). La plus légère mais nécessite un buffer.", tags: ['video', 'definition'], category: 'definition' },
-  { front: "GOP (Group of Pictures)", back: "Séquence d'images entre deux I (ex: IBBPBBIBBP = 10).", tags: ['video', 'definition'], category: 'definition' },
-  { front: "PTS (Presentation Time Stamp)", back: "Instant d'affichage.", tags: ['video', 'definition'], category: 'definition' },
-  { front: "DTS (Decoding Time Stamp)", back: "Instant de décodage. Pour B: DTS > PTS.", tags: ['video', 'definition'], category: 'definition' },
-  { front: "Topologie IPTV", back: "Multicast (un flux par groupe via IGMP).", tags: ['reseau', 'definition'], category: 'definition' },
-  { front: "Topologie Netflix", back: "Unicast (un flux par client, ABR).", tags: ['reseau', 'definition'], category: 'definition' },
-  { front: "Topologie TNT", back: "Broadcast (un vers tous).", tags: ['reseau', 'definition'], category: 'definition' },
-  { front: "DASH", back: "Dynamic Adaptive Streaming: adaptation du débit selon la bande passante.", tags: ['reseau', 'definition'], category: 'definition' },
-  { front: "Gigue (jitter)", back: "Variation du délai de transmission. Compensée par un buffer de jitter.", tags: ['reseau', 'definition'], category: 'definition' },
-  { front: "Débit Full HD brut", back: "1920×1080×24×30 = 1.49 Gbit/s.", tags: ['video', 'formule'], category: 'formula' },
-  { front: "Taux compression H.264", back: "≈ 100:1.", tags: ['video', 'formule'], category: 'formula' },
-  { front: "Chaîne JPEG", back: "RGB→YCbCr→sous-éch. 4:2:0→DCT 8×8→quantification→zigzag→RLE→Huffman.", tags: ['image', 'concept'], category: 'concept' },
-  { front: "DCT produit", back: "1 coefficient DC (moyenne) + 63 coefficients AC (détails).", tags: ['image', 'definition'], category: 'definition' },
-  { front: "SAD (Sum of Absolute Differences)", back: "Somme des différences absolues: trouve le meilleur match pour l'estimation de mouvement.", tags: ['video', 'definition'], category: 'definition' },
-  { front: "PSNR (Peak Signal-to-Noise Ratio)", back: ">40 dB excellent, 30-40 bon, <30 dégradé.", tags: ['video', 'definition'], category: 'definition' },
-  { front: "Fréquence boucle haptique", back: "1000 Hz minimum (perception jusqu'à 500 Hz).", tags: ['haptique', 'formule'], category: 'formula' },
-  { front: "Passivité en haptique", back: "Le système ne génère pas d'énergie: Re(Z) ≥ 0.", tags: ['haptique', 'concept'], category: 'concept' },
-  { front: "Formule Shannon-Hartley", back: "C = B × log₂(1 + SNR) (capacité max d'un canal).", tags: ['reseau', 'formule'], category: 'formula' },
-  { front: "MCU (Multipoint Control Unit)", back: "Mixe les flux (CPU élevé, bande faible).", tags: ['reseau', 'definition'], category: 'definition' },
-  { front: "SFU (Selective Forwarding Unit)", back: "Relaye les flux (CPU faible, bande élevée).", tags: ['reseau', 'definition'], category: 'definition' },
-  { front: "Débit G.711", back: "64 kbit/s (8 kHz, 8 bits).", tags: ['telecom', 'formule'], category: 'formula' },
-  { front: "Débits Opus", back: "6 à 510 kbit/s, latence 5 ms (VoIP).", tags: ['telecom', 'formule'], category: 'formula' },
-  { front: "Pourquoi AAC > MP3", back: "MDCT 1024 bandes: +30% d'efficacité. 128 kbit/s AAC ≈ 192 kbit/s MP3.", tags: ['audio', 'concept'], category: 'comparison' },
-  { front: "Taille paquet MPEG-2 TS", back: "188 octets (4 header + 184 charge utile).", tags: ['reseau', 'definition'], category: 'definition' },
-  { front: "RTP", back: "Real-time Transport Protocol: N° séquence + timestamp sur UDP.", tags: ['reseau', 'definition'], category: 'definition' },
-  { front: "RTCP", back: "Feedback de qualité: perte, gigue, statistiques.", tags: ['reseau', 'definition'], category: 'definition' },
-  { front: "WebRTC", back: "RTP + SRTP + RTCP + ICE (visio P2P).", tags: ['reseau', 'definition'], category: 'definition' },
-  { front: "SVC (Scalable Video Coding)", back: "Couches de base + amélioration (spatial/temporel/qualité).", tags: ['video', 'definition'], category: 'definition' },
-  { front: "FEC (Forward Error Correction)", back: "Correction d'erreurs sans retransmission.", tags: ['reseau', 'definition'], category: 'definition' },
-  { front: "Deadband haptique", back: "Compression: on supprime les variations < JND (7-10%).", tags: ['haptique', 'concept'], category: 'concept' },
-  { front: "Latence typique visio", back: "170 ms (capture 20 + encodage 30 + réseau 40 + jitter 60 + décodage 20).", tags: ['reseau', 'formule'], category: 'formula' },
-  { front: "RTSP", back: "Protocole de contrôle (SETUP, PLAY, PAUSE, TEARDOWN). Ne transporte pas les données (utilise RTP).", tags: ['reseau', 'definition'], category: 'definition' },
-  { front: "SIP", back: "Signalisation VoIP: INVITE, REGISTER, BYE. Composants: UAC, UAS, Proxy, Registrar.", tags: ['reseau', 'definition'], category: 'definition' },
-  { front: "HLS vs DASH", back: "HLS: .m3u8/.ts (Apple). DASH: .mpd/fMP4 (standard MPEG). Les deux font de l'ABR.", tags: ['reseau', 'comparison'], category: 'comparison' },
-  { front: "SRT (Secure Reliable Transport)", back: "Streaming faible latence sur réseaux non fiables (chiffré, ARQ).", tags: ['reseau', 'definition'], category: 'definition' },
-  { front: "RTMP", back: "Protocole Adobe pour l'ingestion (OBS→serveur). Faible latence. RTMPS = chiffré.", tags: ['reseau', 'definition'], category: 'definition' },
-  { front: "QUIC", back: "Transport sur UDP: résout le HoL blocking, 0-RTT, chiffrement intégré. Base de HTTP/3.", tags: ['reseau', 'definition'], category: 'definition' },
-  { front: "Types applications multimédia", back: "Stocké (VoD, TCP), Live (streaming, 2-30s), Temps réel interactif (<150 ms, UDP).", tags: ['reseau', 'concept'], category: 'concept' },
-  { front: "MOS (Mean Opinion Score)", back: "Note de 1 à 5 donnée par des humains.", tags: ['reseau', 'definition'], category: 'definition' },
-] as const
+const flashcards = flashcardsData as any
 
 export default function FlashcardsPage() {
   const { user } = useStore()
@@ -72,8 +24,9 @@ export default function FlashcardsPage() {
       .filter(i => flashcards[i].category === filter)
   }, [filter, shuffledIndices])
 
-  const currentCard = filteredIndices()[currentIndex]
-  const card = flashcards[currentCard]
+  const indices = filteredIndices()
+  const currentCard = indices.length > 0 ? indices[currentIndex] : -1
+  const card = currentCard >= 0 ? flashcards[currentCard] : null
 
   // Load mastered from localStorage
   useEffect(() => {
@@ -175,12 +128,10 @@ export default function FlashcardsPage() {
           </div>
 
           {/* Flashcard */}
-          <div className="perspective-1000 mb-6">
+          <div className="flashcard-3d mb-6">
             <div
-              className={cn(
-                'relative w-full max-w-2xl mx-auto h-[320px] sm:h-[380px] cursor-pointer',
-                flipped && 'rotate-y-180'
-              )}
+              className="flashcard-3d-inner w-full max-w-2xl mx-auto h-[320px] sm:h-[380px] cursor-pointer"
+              style={{ transform: flipped ? 'rotateY(180deg)' : 'rotateY(0deg)' }}
               onClick={handleFlip}
               role="button"
               tabIndex={0}
@@ -188,19 +139,29 @@ export default function FlashcardsPage() {
               aria-label={flipped ? 'Retour au recto' : 'Voir le verso'}
             >
               {/* Front */}
-              <div className="absolute inset-0 w-full h-full rotate-y-0 backface-hidden rounded-2xl bg-gradient-to-br from-card to-card-secondary border border-border shadow-xl flex flex-col items-center justify-center p-8 text-center">
-                <span className="badge badge-calc mb-3">{flashcards[currentCard].category}</span>
-                <p className="text-lg sm:text-xl text-text leading-relaxed whitespace-pre-wrap">{flashcards[currentCard].front}</p>
-                <div className="mt-6 text-text-muted text-sm">Cliquez ou Espace pour retourner</div>
+              <div className="flashcard-3d-face flashcard-3d-front">
+                {card && (
+                  <>
+                    <span className="badge badge-calc mb-3">{card.category}</span>
+                    <p className="text-lg sm:text-xl text-text leading-relaxed whitespace-pre-wrap">{card.front}</p>
+                    <div className="mt-6 text-text-muted text-sm">Cliquez ou Espace pour retourner</div>
+                  </>
+                )}
+                {!card && <div className="text-text-muted">Aucune carte pour ce filtre</div>}
               </div>
 
               {/* Back */}
-              <div className="absolute inset-0 w-full h-full rotate-y-180 backface-hidden rounded-2xl bg-gradient-to-br from-accent/10 to-accent/5 border border-accent/20 shadow-xl flex flex-col items-center justify-center p-8 text-center">
-                <span className="badge badge-ok mb-3">RÉPONSE</span>
-                <p className="text-lg sm:text-xl text-text leading-relaxed whitespace-pre-wrap">{flashcards[currentCard].back}</p>
-                <div className="mt-6 flex gap-2">
-                  <span className="badge badge-calc text-xs">{flashcards[currentCard].tags.join(' · ')}</span>
-                </div>
+              <div className="flashcard-3d-face flashcard-3d-back">
+                {card && (
+                  <>
+                    <span className="badge badge-ok mb-3">RÉPONSE</span>
+                    <p className="text-lg sm:text-xl text-text leading-relaxed whitespace-pre-wrap">{card.back}</p>
+                    <div className="mt-6 flex gap-2">
+                      <span className="badge badge-calc text-xs">{card.tags.join(' · ')}</span>
+                    </div>
+                  </>
+                )}
+                {!card && <div className="text-text-muted">Aucune carte pour ce filtre</div>}
               </div>
             </div>
           </div>
@@ -211,9 +172,9 @@ export default function FlashcardsPage() {
               ◀ Précédente
             </button>
             <button onClick={handleFlip} className="btn btn-primary px-8 py-3 text-lg">
-              {flashcards[currentCard] ? '🔄 Retourner' : '🔄'}
+              🔄 Retourner
             </button>
-            <button onClick={() => { setFilteredIndices => handleNext() }} className="btn btn-secondary" disabled={filteredIndices().length <= 1}>
+            <button onClick={handleNext} className="btn btn-secondary" disabled={filteredIndices().length <= 1}>
               Suivante ▶
             </button>
           </div>
@@ -270,8 +231,8 @@ export default function FlashcardsPage() {
               🔄 Reset progression
             </button>
           </div>
+        </div>
         </main>
       </div>
-    </div>
   )
 }

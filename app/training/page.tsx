@@ -7,6 +7,8 @@ import { cn } from '@/lib/utils'
 import { useEngine, useGeneratorFamily, useTDFamilies } from '@/hooks/useEngine'
 import { useStore } from '@/lib/store'
 import { CircularProgress } from '@/components/layout/ProgressBar'
+import { TDContent } from '@/components/TDContent'
+import quizContent from '@/content/quiz-content.json'
 
 export default function TrainingPage() {
   const { user, recordError } = useStore()
@@ -228,7 +230,7 @@ export default function TrainingPage() {
                   <div className="flex items-center justify-between mb-4">
                     <div>
                       <span className="badge badge-calc text-sm">Exercice généré</span>
-                      <span className="text-caption text-text-muted ml-2">Seed: {instance.seed} | Convention: {instance.meta.convention}</span>
+                      <span className="text-caption text-text-muted ml-2">Seed: {instance.seed} | Convention: {instance.meta?.convention || 'decimal'}</span>
                     </div>
                     <div className="flex gap-2">
                       <button onClick={handleNewExercise} disabled={isGenerating} className="btn btn-secondary text-sm">
@@ -337,14 +339,21 @@ export default function TrainingPage() {
                 <div className="text-center py-12">
                   <div className="text-6xl mb-4">🎲</div>
                   <h3 className="text-xl font-semibold text-text mb-2">Sélectionnez un type d'exercice</h3>
-                  <p className="text-text-muted">Choisissez un TD et un type d'exercice, puis cliquez sur "Nouvel exercice"</p>
+                  <p className="text-text-muted mb-4">Choisissez un TD et un type d'exercice, puis cliquez sur "Générer"</p>
+                  <button 
+                    onClick={handleGenerate} 
+                    disabled={!selectedFamilyId || isGenerating} 
+                    className="btn btn-primary text-lg px-8 py-3"
+                  >
+                    {isGenerating ? '⏳ Génération...' : '🎲 Générer un exercice'}
+                  </button>
                 </div>
               )}
             </div>
 
             {/* Stats */}
             <div className="card p-4">
-              <h4 className="font-semibold text-text mb-4">Statistiques de session</div>
+              <h4 className="font-semibold text-text mb-4">Statistiques de session</h4>
               <div className="grid grid-cols-3 gap-4">
                 <div className="text-center">
                   <CircularProgress value={correctCount + errorCount > 0 ? (correctCount / (correctCount + errorCount)) * 100 : 0} size={60} strokeWidth={6} className="text-accent mx-auto">
@@ -403,6 +412,10 @@ export default function TrainingPage() {
             )}
           </div>
         </div>
+      {/* Quiz from original site */}
+      <div className="card mt-6">
+        <TDContent html={(quizContent as any).html || ''} loadScript={() => import('@/content/quiz-script').then(m => m.quizScript)} />
+      </div>
       </main>
     </div>
   )

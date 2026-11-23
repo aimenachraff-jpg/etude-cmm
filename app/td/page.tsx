@@ -5,10 +5,12 @@ import Link from 'next/link'
 import { MainNav } from '@/components/layout/MainNav'
 import { cn } from '@/lib/utils'
 import { useEngine } from '@/hooks/useEngine'
+import { TDContent } from '@/components/TDContent'
+import tdContent from '@/content/td-content.json'
 
 const tdData = [
   { id: 'TD1', title: 'TD1 — Audio (16 exercices)', color: 'audio', exercises: 16 },
-  { id: 'TD2', title: 'TD2 — Image & Vidéo (7 exercices)', color: 'image', exercises: 7 },
+  { id: 'TD2', title: 'TD2 — Image & Vidéo (5 exercices)', color: 'image', exercises: 5 },
   { id: 'TD3', title: 'TD3 — Streaming & Transport (4 exercices)', color: 'network', exercises: 4 },
   { id: 'TD4', title: 'TD4 — Vidéo & Streaming (6 exercices)', color: 'video', exercises: 6 },
   { id: 'TD5', title: 'TD5 — VoIP, RTP, SFU, DASH (8 exercices)', color: 'network', exercises: 8 },
@@ -107,7 +109,8 @@ export default function TDPage() {
       <main className="container py-6 sm:py-10">
         <div className="mb-8">
           <h1 className="text-2xl sm:text-3xl font-bold text-text mb-2">TD Explorer</h1>
-          <p className="text-text-muted">Tous les exercices des TD1–TD6 avec énoncés, solutions détaillées et générateur de variantes.</        </div>
+          <p className="text-text-muted">Tous les exercices des TD1–TD6 avec énoncés, solutions détaillées et générateur de variantes.</p>
+        </div>
 
         {/* TD Selector */}
         <div className="mb-6 flex flex-wrap gap-2">
@@ -127,17 +130,9 @@ export default function TDPage() {
           ))}
         </div>
 
-        {/* Exercises List */}
-        <div className="space-y-4">
-          {exercises.map((ex) => (
-            <ExerciseCard
-              key={ex.num}
-              tdId={selectedTD}
-              exercise={ex}
-              isExpanded={expandedExercises[ex.num] || false}
-              onToggle={() => setExpandedExercises(prev => ({ ...prev, [ex.num]: !prev[ex.num] }))}
-            />
-          ))}
+        {/* Exercise Content */}
+        <div className="card">
+          <TDContent html={(tdContent as any)[selectedTD] || ''} />
         </div>
       </main>
     </div>
@@ -187,7 +182,7 @@ function ExerciseCard({ tdId, exercise, isExpanded, onToggle }: {
         </button>
       </button>
 
-      {isExpanded && (
+      {isExpanded ? (
         <div className="border-t border-border px-4 pb-4 animate-slide-down">
           <div className="space-y-4 pt-4">
             <div className="flex flex-wrap gap-2">
@@ -224,7 +219,7 @@ function ExerciseCard({ tdId, exercise, isExpanded, onToggle }: {
             </div>
           </div>
         </div>
-      </div>
+      ) : null}
     </div>
   )
 }
